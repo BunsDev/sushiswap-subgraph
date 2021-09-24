@@ -21,7 +21,7 @@ import {
   BIG_INT_ONE_DAY_SECONDS,
   BIG_INT_ZERO,
   MASTER_CHEF_ADDRESS,
-  MASTER_CHEF_START_BLOCK,
+  SUMMONER_START_BLOCK,
 } from 'const'
 import { History, MasterChef, Pool, PoolHistory, User } from '../generated/schema'
 import { getSushiPrice, getUSDRate } from 'pricing'
@@ -326,7 +326,7 @@ export function deposit(event: Deposit): void {
   }
 
   // Calculate SUSHI being paid out
-  if (event.block.number.gt(MASTER_CHEF_START_BLOCK) && user.amount.gt(BIG_INT_ZERO)) {
+  if (event.block.number.gt(SUMMONER_START_BLOCK) && user.amount.gt(BIG_INT_ZERO)) {
     const pending = user.amount
       .toBigDecimal()
       .times(pool.accSushiPerShare.toBigDecimal())
@@ -474,7 +474,7 @@ export function withdraw(event: Withdraw): void {
 
   const user = getUser(event.params.pid, event.params.user, event.block)
 
-  if (event.block.number.gt(MASTER_CHEF_START_BLOCK) && user.amount.gt(BIG_INT_ZERO)) {
+  if (event.block.number.gt(SUMMONER_START_BLOCK) && user.amount.gt(BIG_INT_ZERO)) {
     const pending = user.amount
       .toBigDecimal()
       .times(pool.accSushiPerShare.toBigDecimal())
