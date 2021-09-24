@@ -1,0 +1,31 @@
+specVersion: 0.0.3
+description: Bound
+repository: https://github.com/sushiswap/sushiswap-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: SushiBar
+    network: {{ network }}
+    source:
+      address: '{{ address }}'
+      abi: Bound
+      startBlock: {{ startBlock }}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Bound
+        - User
+      abis:
+        - name: Bound
+          file: ../../node_modules/@soulswap/swap-core/build/abi/SpellBound.json
+        - name: SoulPower
+          file: ../../node_modules/@soulswap/swap-core/build/abi/SushiToken.json
+        - name: Pair
+          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Pair.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: transfer
+      file: ./src/bound.ts
