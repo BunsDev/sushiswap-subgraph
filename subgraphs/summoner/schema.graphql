@@ -1,31 +1,25 @@
-# MasterChef
-type MasterChef @entity {
+# SoulSummoner
+type SoulSummoner @entity {
   # Contract address
   id: ID!
 
   # Bonus multiplier
   bonusMultiplier: BigInt!
 
-  # Bonus end block
-  bonusEndBlock: BigInt!
-
-  # Dev fund address
-  devaddr: Bytes!
+  # Supreme address
+  supreme: Bytes!
 
   # Migrator
   migrator: Bytes!
 
-  # Owner
-  owner: Bytes!
+  # Start Time
+  startTime: BigInt!
 
-  # Start block
-  startBlock: BigInt!
+  # Soul
+  soul: Bytes!
 
-  # Sushi
-  sushi: Bytes!
-
-  # Sushi per block
-  sushiPerBlock: BigInt!
+  # Soul per second
+  soulPerSecond: BigInt!
 
   # Total allocation point
   totalAllocPoint: BigInt!
@@ -59,11 +53,11 @@ type MasterChef @entity {
 }
 
 type History @entity {
-  # Master chef id concatenated with timestamp
+  # Soul Summoner id concatenated with timestamp
   id: ID!
 
-  # Owner (MasterChef, Pool, or User).
-  owner: MasterChef!
+  # Owner (SoulSummoner, Pool, or User).
+  owner: SoulSummoner!
 
   # SLP Balance
   slpBalance: BigDecimal!
@@ -89,11 +83,11 @@ type History @entity {
 
 # Pool
 type Pool @entity {
-  # Index of pool in poolInfo on MasterChef contract
+  # Index of pool in poolInfo on SoulSummoner contract
   id: ID!
 
   # Owner
-  owner: MasterChef!
+  owner: SoulSummoner!
 
   # Pair Liquidity Token Address
   pair: Bytes!
@@ -104,8 +98,8 @@ type Pool @entity {
   # Last reward block
   lastRewardBlock: BigInt!
 
-  # Accumulated sushi per share
-  accSushiPerShare: BigInt!
+  # Accumulated soul per share
+  accSoulPerShare: BigInt!
 
   # SLP token balance
   balance: BigInt!
@@ -137,7 +131,7 @@ type Pool @entity {
   # Block
   block: BigInt!
 
-  # Upated at
+  # Updated at
   updatedAt: BigInt!
 
   # Entry USD
@@ -146,11 +140,11 @@ type Pool @entity {
   # Exit USD
   exitUSD: BigDecimal!
 
-  # Sushi harvested
-  sushiHarvested: BigDecimal!
+  # Soul harvested
+  soulHarvested: BigDecimal!
 
-  # Sushi harvested
-  sushiHarvestedUSD: BigDecimal!
+  # Soul harvested
+  soulHarvestedUSD: BigDecimal!
 }
 
 type PoolHistory @entity {
@@ -190,11 +184,11 @@ type PoolHistory @entity {
   # Exit USD
   exitUSD: BigDecimal!
 
-  # Sushi harvested
-  sushiHarvested: BigDecimal!
+  # Soul harvested
+  soulHarvested: BigDecimal!
 
-  # Sushi harvested
-  sushiHarvestedUSD: BigDecimal!
+  # Soul harvested
+  soulHarvestedUSD: BigDecimal!
 }
 
 type User @entity {
@@ -207,11 +201,11 @@ type User @entity {
   # Related pool
   pool: Pool
 
-  # We do some fancy math here. Basically, any point in time, the amount of SUSHIs
+  # We do some fancy math here. Basically, any point in time, the amount of SOULs
   # entitled to a user but is pending to be distributed is:
-  # pending reward = (user.amount * pool.accSushiPerShare) - user.rewardDebt
+  # pending reward = (user.amount * pool.accSoulPerShare) - user.rewardDebt
   # Whenever a user deposits or withdraws LP tokens to a pool. Here's what happens:
-  # 1. The pool's `accSushiPerShare` (and `lastRewardBlock`) gets updated.
+  # 1. The pool's `accSoulPerShare` (and `lastRewardBlock`) gets updated.
   # 2. User receives the pending reward sent to his/her address.
   # 3. User's `amount` gets updated.
   # 4. User's `rewardDebt` gets updated.
@@ -228,11 +222,11 @@ type User @entity {
   # Exit USD
   exitUSD: BigDecimal!
 
-  # Sushi harvested
-  sushiHarvested: BigDecimal!
+  # Soul harvested
+  soulHarvested: BigDecimal!
 
-  # Sushi harvested
-  sushiHarvestedUSD: BigDecimal!
+  # Soul harvested
+  soulHarvestedUSD: BigDecimal!
 
   # Timestamp
   timestamp: BigInt!

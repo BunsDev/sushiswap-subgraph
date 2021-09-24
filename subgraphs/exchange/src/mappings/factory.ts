@@ -1,4 +1,4 @@
-import { getFactory, getPair } from '../enitites'
+import { getFactory, getPair } from '../entities'
 
 import { BIG_INT_ONE } from 'const'
 import { PairCreated } from '../../generated/Factory/Factory'
@@ -21,6 +21,6 @@ export function onPairCreated(event: PairCreated): void {
   PairTemplate.create(event.params.pair)
 
   // Update pair count once we've sucessesfully created a pair
-  factory.pairCount = factory.pairCount.plus(BIG_INT_ONE)
+  factory.totalPairs = factory.totalPairs.plus(BIG_INT_ONE)
   factory.save()
 }

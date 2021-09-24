@@ -1,6 +1,6 @@
 import {
-  ADDRESS_ZERO,
-  BIG_DECIMAL_1E18,
+  // ADDRESS_ZERO,
+  // BIG_DECIMAL_1E18,
   BIG_DECIMAL_ONE,
   BIG_DECIMAL_ZERO,
   DAI,
@@ -8,14 +8,14 @@ import {
   FACTORY_ADDRESS,
   MINIMUM_LIQUIDITY_THRESHOLD_ETH,
   NATIVE,
-  SUSHI_USDT_PAIR,
+  SOUL_USDT_PAIR,
   USDC,
   USDC_WETH_PAIR,
   USDT,
   USDT_WETH_PAIR,
-  WHITELIST,
+  // WHITELIST,
 } from 'const'
-import { Address, BigDecimal, BigInt, dataSource, ethereum, log } from '@graphprotocol/graph-ts'
+import { Address, BigDecimal, ethereum, log } from '@graphprotocol/graph-ts' //  BigInt, dataSource
 import { Pair, Token } from '../generated/schema'
 
 import { Factory as FactoryContract } from '../generated/templates/Pair/Factory'
@@ -25,8 +25,8 @@ import { Pair as PairContract } from '../generated/templates/Pair/Pair'
 
 export const factoryContract = FactoryContract.bind(FACTORY_ADDRESS)
 
-export function getSushiPrice(): BigDecimal {
-  const pair = Pair.load(SUSHI_USDT_PAIR)
+export function getSoulPrice(): BigDecimal {
+  const pair = Pair.load(SOUL_USDT_PAIR)
 
   if (pair) {
     return pair.token1Price
@@ -38,7 +38,7 @@ export function getSushiPrice(): BigDecimal {
 export function getEthPrice(block: ethereum.Block = null): BigDecimal {
   // TODO: We can can get weighted averages, but this will do for now.
   // If block number is less than or equal to the last stablecoin migration (ETH-USDT), use uniswap eth price.
-  // After this last migration, we can use sushiswap pricing.
+  // After this last migration, we can use soulswap pricing.
   /*if (block !== null && block.number.le(BigInt.fromI32(10829344))) {
     // Uniswap Factory
     const uniswapFactory = FactoryContract.bind(Address.fromString('0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f'))

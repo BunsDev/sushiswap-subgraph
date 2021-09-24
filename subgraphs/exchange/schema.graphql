@@ -38,7 +38,7 @@ type Factory @entity {
   id: ID!
 
   # Pair count
-  pairCount: BigInt!
+  totalPairs: BigInt!
 
   # Volume USD
   volumeUSD: BigDecimal!
@@ -370,7 +370,7 @@ type LiquidityPosition @entity {
   user: User!
   pair: Pair!
   liquidityTokenBalance: BigDecimal!
-  snapshots: [LiquidityPositionSnapshot]! @derivedFrom(field: "liquidityPosition")
+  snapshots: LiquidityPositionSnapshot @derivedFrom(field: "liquidityPosition")
   block: Int!
   timestamp: Int!
 }
@@ -401,9 +401,9 @@ type Transaction @entity {
   timestamp: BigInt!
   # This is not the reverse of Mint.transaction; it is only used to
   # track incomplete mints (similar for burns and swaps)
-  mints: [Mint]!
-  burns: [Burn]!
-  swaps: [Swap]!
+  mints: [Mint!]!
+  burns: [Burn!]!
+  swaps: [Swap!]!
 }
 
 # mint

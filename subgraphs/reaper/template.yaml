@@ -1,18 +1,18 @@
 specVersion: 0.0.2
-description: SushiMaker
+description: SoulReaper
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: SushiMaker
+    name: SoulReaper
     network: {{ network }}
     source:
       address: '{{ address }}'
-      abi: SushiMaker
+      abi: SoulReaper
       startBlock: {{ startBlock }}
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.4
+      apiVersion: 0.0.5
       language: wasm/assemblyscript
       file: ./src/mappings/maker.ts
       entities:
@@ -20,14 +20,14 @@ dataSources:
         - Server
         - Serving
       abis:
-        - name: SushiMaker
-          file: ../../node_modules/@sushiswap/core/build/abi/SushiMaker.json
+        - name: SoulReaper
+          file: ../../node_modules/@sushiswap/core/build/abi/SoulReaper.json
         - name: Pair
-          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Pair.json
+          file: ../../node_modules/@sushiswap/core/build/abi/SoulSwapPair.json
         - name: ERC20
           file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
         - name: Factory
-          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+          file: ../../node_modules/@sushiswap/core/build/abi/SoulSwapFactory.json
       eventHandlers:
         - event: LogConvert(indexed address,indexed address,indexed address,uint256,uint256,uint256)
           handler: handleLogConvert
