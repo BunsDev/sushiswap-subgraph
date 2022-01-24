@@ -73,7 +73,7 @@ export const SUSHI_MAKER_ADDRESS = Address.fromString(
 )
 
 export const SUSHI_TOKEN_ADDRESS = Address.fromString(
-  '{{ sushi_address }}{{^sushi_address}}0x0000000000000000000000000000000000000000{{/sushi_address}}'
+  '{{ soul_address }}{{^soul_address}}0x0000000000000000000000000000000000000000{{/soul_address}}'
 )
 
 export const SUSHI_USDT_PAIR_ADDRESS = Address.fromString(

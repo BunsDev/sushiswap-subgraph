@@ -1,37 +1,25 @@
 # SoulSwap Subgraph
 
-Aims to deliver analytics & historical data for SushiSwap. Still a work in progress. Feel free to contribute!
+Aims to deliver analytics & historical data for SoulSwap. Still a work in progress. Feel free to contribute!
 
-The Graph exposes a GraphQL endpoint to query the events and entities within the SushiSwap ecosytem.
+The Graph exposes a GraphQL endpoint to query the events and entities within the SoulSwap ecosytem.
 
 Current subgraph locations:
 
-1. **Exchange**: Includes all SushiSwap Exchange data with Price Data, Volume, Users, etc:
-   + https://thegraph.com/explorer/subgraph/sushiswap/exchange (mainnet)
-   + https://thegraph.com/explorer/subgraph/sushiswap/bsc-exchange (bsc)
-   + https://q.hg.network/okex-exchange/oec (okex)
-   + https://thegraph.com/explorer/subgraph/sushiswap/xdai-exchange (xdai)
-   + https://q.hg.network/heco-exchange/heco (heco)
-   + https://thegraph.com/explorer/subgraph/sushiswap/matic-exchange (matic)
-   + https://thegraph.com/explorer/subgraph/sushiswap/fantom-exchange (fantom)
-   + https://thegraph.com/explorer/subgraph/sushiswap/arbitrum-exchange (arbitrum)
-   + https://thegraph.com/explorer/subgraph/sushiswap/celo-exchange (celo)
-   + https://thegraph.com/explorer/subgraph/sushiswap/avalanche-exchange (avalanche)
-   + https://sushi.graph.t.hmny.io/subgraphs/name/sushiswap/harmony-exchange (harmony)
+1. **Exchange**: Includes all SoulSwap Exchange data with Price Data, Volume, Users, etc:
+   + https://thegraph.com/explorer/subgraph/soulswapfinance/fantom-exchange (fantom)
 
-2. **Master Chef**: Indexes all MasterChef staking data: https://thegraph.com/explorer/subgraph/sushiswap/master-chef
+2. **Master Chef**: Indexes all MasterChef staking data: https://thegraph.com/explorer/subgraph/soulswapfinance/master-chef
 
-3. **Sushi Maker**: Indexes the SushiMaker contract, that handles the serving of exchange fees to the SushiBar: https://thegraph.com/explorer/subgraph/sushiswap/sushi-maker
+3. **Sushi Timelock**: Includes all of the timelock transactions queued, executed, and cancelled: https://thegraph.com/explorer/subgraph/sushiswap/sushi-timelock
 
-4. **Sushi Timelock**: Includes all of the timelock transactions queued, executed, and cancelled: https://thegraph.com/explorer/subgraph/sushiswap/sushi-timelock
+4. **Sushi Bar**: Indexes the SushiBar, includes data related to the bar: https://thegraph.com/explorer/subgraph/sushiswap/sushi-bar
 
-5. **Sushi Bar**: Indexes the SushiBar, includes data related to the bar: https://thegraph.com/explorer/subgraph/sushiswap/sushi-bar
+5. **SushiSwap-SubGraph-Fork** (on uniswap-fork branch): Indexes the SushiSwap Factory, includes Price Data, Pricing, etc: https://thegraph.com/explorer/subgraph/jiro-ono/sushiswap-v1-exchange
 
-6. **SushiSwap-SubGraph-Fork** (on uniswap-fork branch): Indexes the SushiSwap Factory, includes Price Data, Pricing, etc: https://thegraph.com/explorer/subgraph/jiro-ono/sushiswap-v1-exchange
+6. **BentoBox**: Indexes BentoBox and Kashi Lending data: https://thegraph.com/explorer/subgraph/sushiswap/bentobox
 
-7. **BentoBox**: Indexes BentoBox and Kashi Lending data: https://thegraph.com/explorer/subgraph/sushiswap/bentobox
-
-8. **MiniChef**: Indexes MiniChef contracts that are used in place of MasterChefs for alternate networks:
+7. **MiniChef**: Indexes MiniChef contracts that are used in place of MasterChefs for alternate networks:
   + https://thegraph.com/explorer/subgraph/sushiswap/matic-minichef
 
 ## To setup and deploy

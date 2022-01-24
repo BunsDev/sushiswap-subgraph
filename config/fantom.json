@@ -1,7 +1,7 @@
 {
   "network": "fantom",
   "factory_address": "0x1120e150da9def6fe930f4feded18ef57c0ca7ef",
-  "sushi_address": "0xe2fb177009ff39f52c0134e8007fa0e4baacbd07",
+  "soul_address": "0xe2fb177009ff39f52c0134e8007fa0e4baacbd07",
   "soul_weth_pair": "0xa2527af9dabf3e3b4979d7e0493b5e2c6e63dc57",
   "usdc_weth_pair": "0x160653f02b6597e7db00ba8ca826cf43d2f39556",
   "dai_weth_pair": "0xf3d6e8ecece8647b456d57375ce0b51b8f0cd40b",
