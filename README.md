@@ -1,4 +1,4 @@
-# SushiSwap Subgraph
+# SoulSwap Subgraph
 
 Aims to deliver analytics & historical data for SushiSwap. Still a work in progress. Feel free to contribute!
 
