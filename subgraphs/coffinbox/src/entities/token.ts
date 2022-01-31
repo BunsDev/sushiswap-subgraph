@@ -1,19 +1,19 @@
 import { Address, BigInt, ethereum } from '@graphprotocol/graph-ts'
-import { BIG_INT_ZERO, BIG_INT_ONE, NULL_CALL_RESULT_VALUE, BENTOBOX_ADDRESS } from 'const'
+import { BIG_INT_ZERO, BIG_INT_ONE, NULL_CALL_RESULT_VALUE, COFFINBOX_ADDRESS } from 'const'
 
-import { ERC20 } from '../../generated/BentoBox/ERC20'
-import { ERC20NameBytes } from '../../generated/BentoBox/ERC20NameBytes'
-import { ERC20SymbolBytes } from '../../generated/BentoBox/ERC20SymbolBytes'
+import { ERC20 } from '../../generated/CoffinBox/ERC20'
+import { ERC20NameBytes } from '../../generated/CoffinBox/ERC20NameBytes'
+import { ERC20SymbolBytes } from '../../generated/CoffinBox/ERC20SymbolBytes'
 import { Token } from '../../generated/schema'
-import { getBentoBox } from './bentobox'
+import { getCoffinBox } from './coffinbox'
 
 export function createToken(address: Address, block: ethereum.Block): Token {
-  const bentoBox = getBentoBox(block)
+  const coffinBox = getCoffinBox(block)
 
   const token = new Token(address.toHex())
 
   token.symbol = getSymbol(address)
-  token.bentoBox = bentoBox.id
+  token.coffinBox = coffinBox.id
   token.name = getName(address)
   token.decimals = getDecimals(address)
   token.totalSupplyBase = BIG_INT_ZERO
@@ -24,8 +24,8 @@ export function createToken(address: Address, block: ethereum.Block): Token {
 
   token.save()
 
-  bentoBox.totalTokens = bentoBox.totalTokens.plus(BIG_INT_ONE)
-  bentoBox.save()
+  coffinBox.totalTokens = coffinBox.totalTokens.plus(BIG_INT_ONE)
+  coffinBox.save()
 
   return token as Token
 }

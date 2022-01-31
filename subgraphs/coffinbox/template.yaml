@@ -1,21 +1,21 @@
 specVersion: 0.0.3
-description: BentoBox
+description: CoffinBox
 repository: https://github.com/sushiswap/sushiswap-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: BentoBox
+    name: CoffinBox
     network: {{ network }}
     source:
       address: '{{ address }}'
-      abi: BentoBox
+      abi: CoffinBox
       startBlock: {{ startBlock }}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: ./src/mappings/bentobox.ts
+      file: ./src/mappings/coffinbox.ts
       entities:
         - LogDeploy
         - LogDeposit
@@ -32,10 +32,10 @@ dataSources:
         - LogStrategyProfit
         - LogStrategyLoss
       abis:
-        - name: BentoBox
-          file: ./packages/abis/BentoBox.json
-        - name: KashiPair
-          file: ./packages/abis/KashiPair.json
+        - name: CoffinBox
+          file: ./packages/abis/CoffinBox.json
+        - name: UnderworldPair
+          file: ./packages/abis/UnderworldPair.json
         - name: ERC20
           file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
         - name: ERC20SymbolBytes
@@ -74,15 +74,15 @@ dataSources:
 
 templates:
   - kind: ethereum/contract
-    name: KashiPair
+    name: UnderworldPair
     network: {{ network }}
     source:
-      abi: KashiPair
+      abi: UnderworldPair
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
       language: wasm/assemblyscript
-      file: ./src/mappings/kashi.ts
+      file: ./src/mappings/underworld.ts
       entities:
         - Approval
         - LogExchangeRate
@@ -98,10 +98,10 @@ templates:
         - OwnershipTransferred
         - Transfer
       abis:
-        - name: KashiPair
-          file: ./packages/abis/KashiPair.json
-        - name: BentoBox
-          file: ./packages/abis/BentoBox.json
+        - name: UnderworldPair
+          file: ./packages/abis/UnderworldPair.json
+        - name: CoffinBox
+          file: ./packages/abis/CoffinBox.json
       eventHandlers:
         - event: Approval(indexed address,indexed address,uint256)
           handler: handleApproval

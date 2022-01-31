@@ -11,7 +11,7 @@ import {
   MAXIMUM_INTEREST_PER_YEAR,
   INTEREST_ELASTICITY,
   FACTOR_PRECISION
-} from '../kashi-constants'
+} from '../underworld-constants'
 
 import {
   BIG_INT_ZERO,

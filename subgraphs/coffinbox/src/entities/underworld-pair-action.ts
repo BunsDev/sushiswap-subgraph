@@ -1,7 +1,6 @@
-import { KashiPairAction } from '../../generated/schema'
+import { UnderworldPairAction } from '../../generated/schema'
 import { Address, ethereum } from '@graphprotocol/graph-ts'
-import { getKashiPair } from './kashi-pair'
-import { BIG_INT_ZERO } from 'const'
+import { getUnderworldPair } from './underworld-pair'
 
 import {
   BIG_INT_ZERO,
@@ -13,42 +12,42 @@ import {
   PAIR_REPAY,
 } from 'const'
 
-export function createKashiPairAction(event: ethereum.Event, type: string): KashiPairAction {
+export function createUnderworldPairAction(event: ethereum.Event, type: string): UnderworldPairAction {
   const id = event.transaction.hash.toHex() + '-' + event.logIndex.toString()
 
-  const kashiPair = getKashiPair(event.address, event.block)
+  const underworldPair = getUnderworldPair(event.address, event.block)
 
-  const action = new KashiPairAction(id)
+  const action = new UnderworldPairAction(id)
 
   if (type == PAIR_ADD_COLLATERAL) {
     action.root = getRootId(event.parameters[1].value.toAddress(), event.address)
     action.share = event.parameters[2].value.toBigInt()
-    action.token = kashiPair.collateral
+    action.token = underworldPair.collateral
   } else if (type == PAIR_REMOVE_COLLATERAL) {
     action.root = getRootId(event.parameters[0].value.toAddress(), event.address)
     action.share = event.parameters[2].value.toBigInt()
-    action.token = kashiPair.collateral
+    action.token = underworldPair.collateral
   } else if (type == PAIR_ADD_ASSET) {
     action.root = getRootId(event.parameters[1].value.toAddress(), event.address)
     action.share = event.parameters[2].value.toBigInt()
     action.fraction = event.parameters[3].value.toBigInt()
-    action.token = kashiPair.asset
+    action.token = underworldPair.asset
   } else if (type == PAIR_REMOVE_ASSET) {
     action.root = getRootId(event.parameters[0].value.toAddress(), event.address)
     action.share = event.parameters[2].value.toBigInt()
     action.fraction = event.parameters[3].value.toBigInt()
-    action.token = kashiPair.asset
+    action.token = underworldPair.asset
   } else if (type == PAIR_BORROW) {
     action.root = getRootId(event.parameters[0].value.toAddress(), event.address)
     action.amount = event.parameters[2].value.toBigInt()
     action.feeAmount = event.parameters[3].value.toBigInt()
     action.part = event.parameters[4].value.toBigInt()
-    action.token = kashiPair.asset
+    action.token = underworldPair.asset
   } else if (type == PAIR_REPAY) {
     action.root = getRootId(event.parameters[1].value.toAddress(), event.address)
     action.amount = event.parameters[2].value.toBigInt()
     action.part = event.parameters[3].value.toBigInt()
-    action.token = kashiPair.asset
+    action.token = underworldPair.asset
   }
 
   action.type = type
@@ -56,7 +55,7 @@ export function createKashiPairAction(event: ethereum.Event, type: string): Kash
   action.block = event.block.number
   action.timestamp = event.block.timestamp
 
-  return action as KashiPairAction
+  return action as UnderworldPairAction
 }
 
 function getRootId(user: Address, pair: Address): string {

@@ -1,9 +1,9 @@
 import { BigInt, ethereum } from '@graphprotocol/graph-ts'
 
-import { BIG_INT_ZERO, BIG_INT_ONE, BIG_INT_TWO, KASHI_PAIR_MEDIUM_RISK_TYPE} from 'const'
-import { KashiPairDayData, KashiPairHourData, KashiPair } from '../../generated/schema'
+import { BIG_INT_ZERO, BIG_INT_ONE, BIG_INT_TWO, UNDERWORLD_PAIR_MEDIUM_RISK_TYPE} from 'const'
+import { UnderworldPairDayData, UnderworldPairHourData, UnderworldPair } from '../../generated/schema'
 
-export function updateKashiPairDayData(event: ethereum.Event): KashiPairDayData {
+export function updateUnderworldPairDayData(event: ethereum.Event): UnderworldPairDayData {
   let timestamp = event.block.timestamp.toI32()
   let dayID = timestamp / 86400
   let dayStartTimestamp = dayID * 86400
@@ -12,10 +12,10 @@ export function updateKashiPairDayData(event: ethereum.Event): KashiPairDayData 
     .concat('-')
     .concat(BigInt.fromI32(dayID).toString())
 
-  let pair = KashiPair.load(event.address.toHex())
-  let data = KashiPairDayData.load(dayPairID)
+  let pair = UnderworldPair.load(event.address.toHex())
+  let data = UnderworldPairDayData.load(dayPairID)
   if (data === null) {
-    data = new KashiPairDayData(dayPairID)
+    data = new UnderworldPairDayData(dayPairID)
     data.date = dayStartTimestamp
     data.pair = pair.id
     data.avgExchangeRate = pair.exchangeRate
@@ -33,10 +33,10 @@ export function updateKashiPairDayData(event: ethereum.Event): KashiPairDayData 
   data.avgInterestPerSecond = data.avgInterestPerSecond.plus(pair.interestPerSecond).div(BIG_INT_TWO)
   data.save()
 
-  return data as KashiPairDayData
+  return data as UnderworldPairDayData
 }
 
-export function updateKashiPairHourData(event: ethereum.Event): KashiPairHourData {
+export function updateUnderworldPairHourData(event: ethereum.Event): UnderworldPairHourData {
   let timestamp = event.block.timestamp.toI32()
   let hourIndex = timestamp / 3600 // get unique hour within unix history
   let hourStartUnix = hourIndex * 3600 // want the rounded effect
@@ -45,10 +45,10 @@ export function updateKashiPairHourData(event: ethereum.Event): KashiPairHourDat
     .concat('-')
     .concat(BigInt.fromI32(hourIndex).toString())
 
-  let pair = KashiPair.load(event.address.toHex())
-  let data = KashiPairHourData.load(hourPairID)
+  let pair = UnderworldPair.load(event.address.toHex())
+  let data = UnderworldPairHourData.load(hourPairID)
   if (data === null) {
-    data = new KashiPairHourData(hourPairID)
+    data = new UnderworldPairHourData(hourPairID)
     data.hourStartUnix = hourStartUnix
     data.pair = pair.id
     data.avgExchangeRate = pair.exchangeRate
@@ -66,5 +66,5 @@ export function updateKashiPairHourData(event: ethereum.Event): KashiPairHourDat
   data.avgInterestPerSecond = data.avgInterestPerSecond.plus(pair.interestPerSecond).div(BIG_INT_TWO)
   data.save()
 
-  return data as KashiPairHourData
+  return data as UnderworldPairHourData
 }

@@ -147,10 +147,10 @@ type Pool @entity {
   exitUSD: BigDecimal!
 
   # Sushi harvested
-  sushiHarvested: BigDecimal!
+  soulHarvested: BigDecimal!
 
   # Sushi harvested
-  sushiHarvestedUSD: BigDecimal!
+  soulHarvestedUSD: BigDecimal!
 }
 
 type PoolHistory @entity {
@@ -191,10 +191,10 @@ type PoolHistory @entity {
   exitUSD: BigDecimal!
 
   # Sushi harvested
-  sushiHarvested: BigDecimal!
+  soulHarvested: BigDecimal!
 
   # Sushi harvested
-  sushiHarvestedUSD: BigDecimal!
+  soulHarvestedUSD: BigDecimal!
 }
 
 type User @entity {
@@ -229,10 +229,10 @@ type User @entity {
   exitUSD: BigDecimal!
 
   # Sushi harvested
-  sushiHarvested: BigDecimal!
+  soulHarvested: BigDecimal!
 
   # Sushi harvested
-  sushiHarvestedUSD: BigDecimal!
+  soulHarvestedUSD: BigDecimal!
 
   # Timestamp
   timestamp: BigInt!

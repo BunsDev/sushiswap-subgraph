@@ -1,8 +1,8 @@
-import { BentoBoxAction } from '../../generated/schema'
+import { CoffinBoxAction } from '../../generated/schema'
 import { ethereum } from '@graphprotocol/graph-ts'
 import { BIG_INT_ZERO } from 'const'
 
-export function createBentoBoxAction(event: ethereum.Event, type: string): BentoBoxAction {
+export function createCoffinBoxAction(event: ethereum.Event, type: string): CoffinBoxAction {
   const id = event.transaction.hash.toHex() + '-' + event.logIndex.toString()
 
   const token = event.parameters[0].value.toAddress()
@@ -11,9 +11,9 @@ export function createBentoBoxAction(event: ethereum.Event, type: string): Bento
   const amount = event.parameters[3].value.toBigInt()
   const share = event.parameters.length == 5 ? event.parameters[4].value.toBigInt() : BIG_INT_ZERO
 
-  const action = new BentoBoxAction(id)
+  const action = new CoffinBoxAction(id)
 
-  action.bentoBox = event.address.toHex()
+  action.coffinBox = event.address.toHex()
   action.type = type
   action.from = from.toHex()
   action.to = to.toHex()
@@ -25,5 +25,5 @@ export function createBentoBoxAction(event: ethereum.Event, type: string): Bento
 
   action.save()
 
-  return action as BentoBoxAction
+  return action as CoffinBoxAction
 }

@@ -12,12 +12,12 @@ import {
   LogWithdrawFees,
   OwnershipTransferred,
   Transfer,
-} from '../../generated/templates/KashiPair/KashiPair'
+} from '../../generated/templates/UnderworldPair/UnderworldPair'
 
-import { BentoBox as BentoBoxContract } from '../../generated/BentoBox/BentoBox'
+import { CoffinBox as CoffinBoxContract } from '../../generated/CoffinBox/CoffinBox'
 
 import {
-  BENTOBOX_ADDRESS,
+  COFFINBOX_ADDRESS,
   BIG_INT_ONE_HUNDRED,
   BIG_INT_ZERO,
   PAIR_ADD_ASSET,
@@ -29,20 +29,20 @@ import {
 } from 'const'
 
 import {
-  getKashiPair,
+  getUnderworldPair,
   getUser,
-  getUserKashiPair,
-  updateKashiPairDayData,
-  updateKashiPairHourData
+  getUserUnderworldPair,
+  updateUnderworldPairDayData,
+  updateUnderworldPairHourData
 } from '../entities'
-import { createKashiPairAction } from '../entities/kashi-pair-action'
+import { createUnderworldPairAction } from '../entities/underworld-pair-action'
 import { Address, BigInt, log } from '@graphprotocol/graph-ts'
 import { getInterestPerYear, takeFee } from '../helpers/interest'
 
-// TODO: add callHandler for liquidate function on KashiPairs
+// TODO: add callHandler for liquidate function on UnderworldPairs
 
 export function handleApproval(event: Approval): void {
-  log.info('[BentoBox:KashiPair] Approval {} {} {}', [
+  log.info('[CoffinBox:UnderworldPair] Approval {} {} {}', [
     event.params._owner.toHex(),
     event.params._spender.toHex(),
     event.params._value.toString()
@@ -50,29 +50,29 @@ export function handleApproval(event: Approval): void {
 }
 
 export function handleLogExchangeRate(event: LogExchangeRate): void {
-  log.info('[BentoBox:KashiPair] Log Exchange Rate {}', [
+  log.info('[CoffinBox:UnderworldPair] Log Exchange Rate {}', [
     event.params.rate.toString()
   ])
 
-  const pair = getKashiPair(event.address, event.block)
+  const pair = getUnderworldPair(event.address, event.block)
   pair.exchangeRate = event.params.rate
   pair.block = event.block.number
   pair.timestamp = event.block.timestamp
   pair.save()
 
-  updateKashiPairDayData(event)
-  updateKashiPairHourData(event)
+  updateUnderworldPairDayData(event)
+  updateUnderworldPairHourData(event)
 }
 
 export function handleLogAccrue(event: LogAccrue): void {
-  log.info('[BentoBox:KashiPair] Log Accrue {} {} {} {}', [
+  log.info('[CoffinBox:UnderworldPair] Log Accrue {} {} {} {}', [
     event.params.accruedAmount.toString(),
     event.params.feeFraction.toString(),
     event.params.rate.toString(),
     event.params.utilization.toString()
   ])
 
-  const pair = getKashiPair(event.address, event.block)
+  const pair = getUnderworldPair(event.address, event.block)
   const extraAmount = event.params.accruedAmount
   const feeFraction = event.params.feeFraction
 
@@ -92,12 +92,12 @@ export function handleLogAccrue(event: LogAccrue): void {
   pair.timestamp = event.block.timestamp
   pair.save()
 
-  updateKashiPairDayData(event)
-  updateKashiPairHourData(event)
+  updateUnderworldPairDayData(event)
+  updateUnderworldPairHourData(event)
 }
 
 export function handleLogAddCollateral(event: LogAddCollateral): void {
-    log.info('[BentoBox:KashiPair] Log Add Collateral {} {} {}', [
+    log.info('[CoffinBox:UnderworldPair] Log Add Collateral {} {} {}', [
       event.params.from.toHex(),
       event.params.to.toHex(),
       event.params.share.toString()
@@ -105,7 +105,7 @@ export function handleLogAddCollateral(event: LogAddCollateral): void {
 
     const share = event.params.share
 
-    const pair = getKashiPair(event.address, event.block)
+    const pair = getUnderworldPair(event.address, event.block)
     pair.totalCollateralShare = pair.totalCollateralShare.plus(share)
     pair.block = event.block.number
     pair.timestamp = event.block.timestamp
@@ -118,31 +118,31 @@ export function handleLogAddCollateral(event: LogAddCollateral): void {
     //user.timestamp = event.block.timestamp
     //user.save()
 
-    const userData = getUserKashiPair(event.params.to, event.address, event.block)
+    const userData = getUserUnderworldPair(event.params.to, event.address, event.block)
     userData.collateralShare = userData.collateralShare.plus(share)
     userData.save()
 
-    const action = createKashiPairAction(event, PAIR_ADD_COLLATERAL)
+    const action = createUnderworldPairAction(event, PAIR_ADD_COLLATERAL)
     action.poolPercentage = share.div(pair.totalCollateralShare).times(BIG_INT_ONE_HUNDRED)
     action.save()
 
-    updateKashiPairDayData(event)
-    updateKashiPairHourData(event)
+    updateUnderworldPairDayData(event)
+    updateUnderworldPairHourData(event)
 }
 
 export function handleLogAddAsset(event: LogAddAsset): void {
-  log.info('[BentoBox:KashiPair] Log Add Asset {} {} {} {}', [
+  log.info('[CoffinBox:UnderworldPair] Log Add Asset {} {} {} {}', [
     event.params.from.toHex(),
     event.params.to.toHex(),
     event.params.share.toString(),
     event.params.fraction.toString()
   ])
-  // elastic = BentoBox shares held by the KashiPair, base = Total fractions held by asset suppliers
+  // elastic = CoffinBox shares held by the UnderworldPair, base = Total fractions held by asset suppliers
 
   const share = event.params.share
   const fraction = event.params.fraction
 
-  const pair = getKashiPair(event.address, event.block)
+  const pair = getUnderworldPair(event.address, event.block)
   pair.totalAssetElastic = pair.totalAssetElastic.plus(share)
   pair.totalAssetBase = pair.totalAssetBase.plus(fraction)
   pair.save()
@@ -150,27 +150,27 @@ export function handleLogAddAsset(event: LogAddAsset): void {
 
   // TODO: see if we need update user entity
 
-  const userData = getUserKashiPair(event.params.to, event.address, event.block)
+  const userData = getUserUnderworldPair(event.params.to, event.address, event.block)
   userData.assetFraction = userData.assetFraction.plus(fraction)
   userData.save()
 
-  const action = createKashiPairAction(event, PAIR_ADD_ASSET)
+  const action = createUnderworldPairAction(event, PAIR_ADD_ASSET)
   action.poolPercentage = fraction.div(pair.totalAssetBase).times(BIG_INT_ONE_HUNDRED)
   action.save()
 
-  updateKashiPairDayData(event)
-  updateKashiPairHourData(event)
+  updateUnderworldPairDayData(event)
+  updateUnderworldPairHourData(event)
 }
 
 export function handleLogRemoveCollateral(event: LogRemoveCollateral): void {
-  log.info('[BentoBox:KashiPair] Log Remove Collateral {} {} {}', [
+  log.info('[CoffinBox:UnderworldPair] Log Remove Collateral {} {} {}', [
     event.params.from.toHex(),
     event.params.to.toHex(),
     event.params.share.toString()
   ])
 
   const share = event.params.share
-  const pair = getKashiPair(event.address, event.block)
+  const pair = getUnderworldPair(event.address, event.block)
   const poolPercentage = share.div(pair.totalCollateralShare).times(BIG_INT_ONE_HUNDRED)
 
   pair.totalCollateralShare = pair.totalCollateralShare.minus(share)
@@ -178,30 +178,30 @@ export function handleLogRemoveCollateral(event: LogRemoveCollateral): void {
 
   // TODO: see if we want to update the users (maybe event add more props)
 
-  const userData = getUserKashiPair(event.params.from, event.address, event.block)
+  const userData = getUserUnderworldPair(event.params.from, event.address, event.block)
   userData.collateralShare = userData.collateralShare.minus(share)
   userData.save()
 
-  const action = createKashiPairAction(event, PAIR_REMOVE_COLLATERAL)
+  const action = createUnderworldPairAction(event, PAIR_REMOVE_COLLATERAL)
   action.poolPercentage = poolPercentage
   action.save()
 
-  updateKashiPairDayData(event)
-  updateKashiPairHourData(event)
+  updateUnderworldPairDayData(event)
+  updateUnderworldPairHourData(event)
 }
 
 export function handleLogRemoveAsset(event: LogRemoveAsset): void {
-  log.info('[BentoBox:KashiPair] Log Remove Asset {} {} {} {}', [
+  log.info('[CoffinBox:UnderworldPair] Log Remove Asset {} {} {} {}', [
     event.params.from.toHex(),
     event.params.to.toHex(),
     event.params.share.toString(),
     event.params.fraction.toString()
   ])
-  // elastic = BentoBox shares held by the KashiPair, base = Total fractions held by asset suppliers
+  // elastic = CoffinBox shares held by the UnderworldPair, base = Total fractions held by asset suppliers
 
   const share = event.params.share
   const fraction = event.params.fraction
-  const pair = getKashiPair(event.address, event.block)
+  const pair = getUnderworldPair(event.address, event.block)
   const poolPercentage = fraction.div(pair.totalAssetBase).times(BIG_INT_ONE_HUNDRED)
 
 
@@ -211,20 +211,20 @@ export function handleLogRemoveAsset(event: LogRemoveAsset): void {
 
   //TODO: maybe update user and check if solvent
 
-  const userData = getUserKashiPair(event.params.from, event.address, event.block)
+  const userData = getUserUnderworldPair(event.params.from, event.address, event.block)
   userData.assetFraction = userData.assetFraction.minus(fraction)
   userData.save()
 
-  const action = createKashiPairAction(event, PAIR_REMOVE_ASSET)
+  const action = createUnderworldPairAction(event, PAIR_REMOVE_ASSET)
   action.poolPercentage = poolPercentage
   action.save()
 
-  updateKashiPairDayData(event)
-  updateKashiPairHourData(event)
+  updateUnderworldPairDayData(event)
+  updateUnderworldPairHourData(event)
 }
 
 export function handleLogBorrow(event: LogBorrow): void {
-  log.info('[BentoBox:KashiPair] Log Borrow {} {} {} {} {}', [
+  log.info('[CoffinBox:UnderworldPair] Log Borrow {} {} {} {} {}', [
     event.params.from.toHex(),
     event.params.to.toHex(),
     event.params.amount.toString(),
@@ -237,33 +237,33 @@ export function handleLogBorrow(event: LogBorrow): void {
   const feeAmount = event.params.feeAmount
   const part = event.params.part
 
-  const pair = getKashiPair(event.address, event.block)
+  const pair = getUnderworldPair(event.address, event.block)
   pair.totalBorrowBase = pair.totalBorrowBase.plus(part)
   pair.totalBorrowElastic = pair.totalBorrowElastic.plus(amount).plus(feeAmount)
 
-  // TODO: may need to do a contact call to bentoBox and call the toShare function to get the amount to subtract by
+  // TODO: may need to do a contact call to coffinBox and call the toShare function to get the amount to subtract by
   //       check that is working properly
-  const bentoBoxContract = BentoBoxContract.bind(BENTOBOX_ADDRESS)
-  let share = bentoBoxContract.toShare(Address.fromString(pair.asset), amount, false)
+  const coffinBoxContract = CoffinBoxContract.bind(COFFINBOX_ADDRESS)
+  let share = coffinBoxContract.toShare(Address.fromString(pair.asset), amount, false)
   pair.totalAssetElastic = pair.totalAssetElastic.minus(share)
   pair.save()
 
   // TODO: probaly update User and check if solvent
 
-  const userData = getUserKashiPair(event.params.from, event.address, event.block)
+  const userData = getUserUnderworldPair(event.params.from, event.address, event.block)
   userData.borrowPart = userData.borrowPart.plus(part)
   userData.save()
 
-  const action = createKashiPairAction(event, PAIR_BORROW)
+  const action = createUnderworldPairAction(event, PAIR_BORROW)
   action.poolPercentage = part.div(pair.totalBorrowBase).times(BIG_INT_ONE_HUNDRED)
   action.save()
 
-  updateKashiPairDayData(event)
-  updateKashiPairHourData(event)
+  updateUnderworldPairDayData(event)
+  updateUnderworldPairHourData(event)
 }
 
 export function handleLogRepay(event: LogRepay): void {
-  log.info('[BentoBox:KashiPair] Log Repay {} {}', [
+  log.info('[CoffinBox:UnderworldPair] Log Repay {} {}', [
     event.params.from.toHex(),
     event.params.to.toHex(),
     event.params.amount.toString(),
@@ -273,36 +273,36 @@ export function handleLogRepay(event: LogRepay): void {
 
   const amount = event.params.amount
   const part = event.params.part
-  const pair = getKashiPair(event.address, event.block)
+  const pair = getUnderworldPair(event.address, event.block)
   const poolPercentage = part.div(pair.totalBorrowBase).times(BIG_INT_ONE_HUNDRED)
 
   pair.totalBorrowBase = pair.totalBorrowBase.minus(part)
   pair.totalBorrowElastic = pair.totalBorrowElastic.minus(amount)
 
-  const bentoBoxContract = BentoBoxContract.bind(BENTOBOX_ADDRESS)
-  let share = bentoBoxContract.toShare(Address.fromString(pair.asset), amount, false)
+  const coffinBoxContract = CoffinBoxContract.bind(COFFINBOX_ADDRESS)
+  let share = coffinBoxContract.toShare(Address.fromString(pair.asset), amount, false)
   pair.totalAssetElastic = pair.totalAssetElastic.plus(share)
   pair.save()
 
   // TODO: probaly update User and check if solvent
-  const userData = getUserKashiPair(event.params.to, event.address, event.block)
+  const userData = getUserUnderworldPair(event.params.to, event.address, event.block)
   userData.borrowPart = userData.borrowPart.minus(part)
   userData.save()
 
-  const action = createKashiPairAction(event, PAIR_REPAY)
+  const action = createUnderworldPairAction(event, PAIR_REPAY)
   action.poolPercentage = poolPercentage
   action.save()
 
-  updateKashiPairDayData(event)
-  updateKashiPairHourData(event)
+  updateUnderworldPairDayData(event)
+  updateUnderworldPairHourData(event)
 }
 
 export function handleLogFeeTo(event: LogFeeTo): void {
-  log.info('[BentoBox:KashiPair] Log Fee To {}', [event.params.newFeeTo.toHex()])
+  log.info('[CoffinBox:UnderworldPair] Log Fee To {}', [event.params.newFeeTo.toHex()])
 
   // TODO: I think the block and timestamp should be updated everytime getPair is called
-  //       same getUser and maybe even UserKashiPair
-  const pair = getKashiPair(event.address, event.block)
+  //       same getUser and maybe even UserUnderworldPair
+  const pair = getUnderworldPair(event.address, event.block)
   pair.feeTo = event.params.newFeeTo
   pair.block = event.block.number
   pair.timestamp = event.block.timestamp
@@ -310,25 +310,25 @@ export function handleLogFeeTo(event: LogFeeTo): void {
 }
 
 export function handleLogWithdrawFees(event: LogWithdrawFees): void {
-  log.info('[BentoBox:KashiPair] Log Withdraw Fees {} {}', [
+  log.info('[CoffinBox:UnderworldPair] Log Withdraw Fees {} {}', [
     event.params.feeTo.toHex(),
     event.params.feesEarnedFraction.toString()
   ])
 
   // TODO: fix block and timestamp updates as asked in above function
-  const pair = getKashiPair(event.address, event.block)
+  const pair = getUnderworldPair(event.address, event.block)
   pair.feesEarnedFraction = BIG_INT_ZERO
   pair.totalFeesEarnedFraction = pair.totalFeesEarnedFraction.plus(event.params.feesEarnedFraction)
   pair.block = event.block.number
   pair.timestamp = event.block.timestamp
   pair.save()
 
-  // TODO: add function within kashi-pair-data to update totalFees for hour and day data
+  // TODO: add function within underworld-pair-data to update totalFees for hour and day data
   //       then call those functions here
 }
 
 export function handleTransfer(event: Transfer): void {
-  log.info('[BentoBox:KashiPair] Log Transfer {} {} {}',
+  log.info('[CoffinBox:UnderworldPair] Log Transfer {} {} {}',
   [
     event.params._from.toHex(),
     event.params._to.toHex(),
@@ -337,11 +337,11 @@ export function handleTransfer(event: Transfer): void {
 
   const fraction = event.params._value
 
-  const userFrom = getUserKashiPair(event.params._from, event.address, event.block)
+  const userFrom = getUserUnderworldPair(event.params._from, event.address, event.block)
   userFrom.assetFraction = userFrom.assetFraction.minus(fraction)
   userFrom.save()
 
-  const userTo = getUserKashiPair(event.params._to, event.address, event.block)
+  const userTo = getUserUnderworldPair(event.params._to, event.address, event.block)
   userTo.assetFraction = userTo.assetFraction.plus(fraction)
   userTo.save()
 }

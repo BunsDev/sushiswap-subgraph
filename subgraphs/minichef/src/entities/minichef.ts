@@ -1,4 +1,4 @@
-import { BIG_INT_ZERO, SUSHI_TOKEN_ADDRESS } from 'const'
+import { BIG_INT_ZERO, SOUL_TOKEN_ADDRESS } from 'const'
 import { dataSource, ethereum } from '@graphprotocol/graph-ts'
 
 import { MiniChef } from '../../generated/schema'
@@ -8,7 +8,7 @@ export function getMiniChef(block: ethereum.Block): MiniChef {
 
   if (miniChef === null) {
     miniChef = new MiniChef(dataSource.address().toHex())
-    miniChef.sushi = SUSHI_TOKEN_ADDRESS
+    miniChef.sushi = SOUL_TOKEN_ADDRESS
     miniChef.sushiPerSecond = BIG_INT_ZERO
     miniChef.totalAllocPoint = BIG_INT_ZERO
     miniChef.poolCount = BIG_INT_ZERO

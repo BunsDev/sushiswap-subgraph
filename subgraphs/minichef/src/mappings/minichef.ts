@@ -148,6 +148,6 @@ export function harvest(event: Harvest): void {
   const accumulatedSushi = user.amount.times(pool.accSushiPerShare).div(ACC_SUSHI_PRECISION)
 
   user.rewardDebt = accumulatedSushi
-  user.sushiHarvested = user.sushiHarvested.plus(event.params.amount)
+  user.soulHarvested = user.soulHarvested.plus(event.params.amount)
   user.save()
 }

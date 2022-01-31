@@ -1,33 +1,33 @@
-type BentoBox @entity {
+type CoffinBox @entity {
   # Contract ID
   id: ID!
 
-  users: [User!] @derivedFrom(field: "bentoBox")
-  tokens: [Token!] @derivedFrom(field: "bentoBox")
-  kashiPairs: [KashiPair!] @derivedFrom(field: "bentoBox")
-  transactions: [BentoBoxAction!] @derivedFrom(field: "bentoBox")
-  flashloans: [FlashLoan!] @derivedFrom(field: "bentoBox")
-  masterContracts: [MasterContract!] @derivedFrom(field: "bentoBox")
+  users: [User!] @derivedFrom(field: "coffinBox")
+  tokens: [Token!] @derivedFrom(field: "coffinBox")
+  underworldPairs: [UnderworldPair!] @derivedFrom(field: "coffinBox")
+  transactions: [CoffinBoxAction!] @derivedFrom(field: "coffinBox")
+  flashloans: [FlashLoan!] @derivedFrom(field: "coffinBox")
+  masterContracts: [MasterContract!] @derivedFrom(field: "coffinBox")
   #protocols
 
   totalTokens: BigInt!
-  totalKashiPairs: BigInt!
+  totalUnderworldPairs: BigInt!
   totalUsers: BigInt!
 
   block: BigInt!
   timestamp: BigInt!
 }
 
-enum BentoBoxActionType {
+enum CoffinBoxActionType {
   deposit
   transfer
   withdraw
 }
 
-type BentoBoxAction @entity {
+type CoffinBoxAction @entity {
   id: ID!
-  bentoBox: BentoBox!
-  type: BentoBoxActionType!
+  coffinBox: CoffinBox!
+  type: CoffinBoxActionType!
   from: User!
   to: User!
   token: Token!
@@ -39,7 +39,7 @@ type BentoBoxAction @entity {
 
 type FlashLoan @entity {
   id: ID!
-  bentoBox: BentoBox!
+  coffinBox: CoffinBox!
   borrower: Bytes!
   receiver: Bytes!
   token: Token!
@@ -51,14 +51,14 @@ type FlashLoan @entity {
 
 type MasterContract @entity {
   id: ID!
-  bentoBox: BentoBox!
+  coffinBox: CoffinBox!
   clones: [Clone!] @derivedFrom(field: "masterContract")
   masterContractApprovals: [MasterContractApproval!] @derivedFrom(field: "masterContract")
 }
 
 type Clone @entity {
   id: ID!
-  bentoBox: BentoBox!
+  coffinBox: CoffinBox!
   masterContract: MasterContract!
   data: String!
   block: BigInt!
@@ -80,7 +80,7 @@ type Protocol @entity {
 
 type Token @entity {
   id: ID!
-  bentoBox: BentoBox!
+  coffinBox: CoffinBox!
   name: String!
   symbol: String!
   decimals: BigInt!
@@ -94,12 +94,12 @@ type Token @entity {
 
 type User @entity {
   id: ID!
-  bentoBox: BentoBox!
+  coffinBox: CoffinBox!
   masterContractApprovals: [MasterContractApproval!] @derivedFrom(field: "user")
   tokens: [UserToken!] @derivedFrom(field: "user")
-  kashiPairs: [UserKashiPair!] @derivedFrom(field: "user")
-  withdrawals: [BentoBoxAction!] @derivedFrom(field: "from")
-  deposits: [BentoBoxAction!] @derivedFrom(field: "to")
+  underworldPairs: [UserUnderworldPair!] @derivedFrom(field: "user")
+  withdrawals: [CoffinBoxAction!] @derivedFrom(field: "from")
+  deposits: [CoffinBoxAction!] @derivedFrom(field: "to")
   block: BigInt!
   timestamp: BigInt!
 }
@@ -114,14 +114,14 @@ type UserToken @entity {
   timestamp: BigInt!
 }
 
-enum KashiPairType {
+enum UnderworldPairType {
   medium
 }
 
-type KashiPair @entity {
+type UnderworldPair @entity {
   id: ID!
-  bentoBox: BentoBox!
-  type: KashiPairType!
+  coffinBox: CoffinBox!
+  type: UnderworldPairType!
   masterContract: MasterContract!
   owner: Bytes!
   feeTo: Bytes!
@@ -143,13 +143,13 @@ type KashiPair @entity {
   lastAccrued: BigInt!
   supplyAPR: BigInt!
   borrowAPR: BigInt!
-  transactions: [KashiPairAction!] @derivedFrom(field: "pair")
-  users: [UserKashiPair!] @derivedFrom(field: "pair")
+  transactions: [UnderworldPairAction!] @derivedFrom(field: "pair")
+  users: [UserUnderworldPair!] @derivedFrom(field: "pair")
   block: BigInt!
   timestamp: BigInt!
 }
 
-enum KashiPairActionType {
+enum UnderworldPairActionType {
   addAsset
   removeAsset
   addCollateral
@@ -158,11 +158,11 @@ enum KashiPairActionType {
   repay
 }
 
-type KashiPairAction @entity {
+type UnderworldPairAction @entity {
   id: ID!
-  type: KashiPairActionType!
-  pair: KashiPair!
-  root: UserKashiPair!
+  type: UnderworldPairActionType!
+  pair: UnderworldPair!
+  root: UserUnderworldPair!
   token: Token!
   amount: BigInt
   share: BigInt
@@ -174,25 +174,25 @@ type KashiPairAction @entity {
   timestamp: BigInt!
 }
 
-type UserKashiPair @entity {
+type UserUnderworldPair @entity {
   id: ID!
   user: User!
-  pair: KashiPair!
+  pair: UnderworldPair!
   assetFraction: BigInt! #comes from balanceOf on pair contract
   collateralShare: BigInt!
   borrowPart: BigInt!
-  transactions: [KashiPairAction!] @derivedFrom(field: "root")
+  transactions: [UnderworldPairAction!] @derivedFrom(field: "root")
   block: BigInt!
   timestamp: BigInt!
 }
 
-type KashiPairHourData @entity {
+type UnderworldPairHourData @entity {
   # pair id - hour start timestamp
   id: ID!
 
   hourStartUnix: Int!
 
-  pair: KashiPair!
+  pair: UnderworldPair!
 
   totalAssetElastic: BigInt!
   totalAssetBase: BigInt!
@@ -212,14 +212,14 @@ type KashiPairHourData @entity {
   #avgBorrowInterestPerSecond: BigInt!
 }
 
-type KashiPairDayData @entity {
+type UnderworldPairDayData @entity {
   # pair id - day start timestamp
   id: ID!
 
   # date - hour start timestamp
   date: Int!
 
-  pair: KashiPair!
+  pair: UnderworldPair!
 
   totalAssetElastic: BigInt!
   totalAssetBase: BigInt!

@@ -33,8 +33,8 @@ export function getUser(pid: BigInt, address: Address, block: ethereum.Block): U
     user.address = address
     user.amount = BIG_INT_ZERO
     user.rewardDebt = BIG_INT_ZERO
-    user.sushiHarvestedSinceLockup = BIG_DECIMAL_ZERO
-    user.sushiHarvestedSinceLockupUSD = BIG_DECIMAL_ZERO
+    user.soulHarvestedSinceLockup = BIG_DECIMAL_ZERO
+    user.soulHarvestedSinceLockupUSD = BIG_DECIMAL_ZERO
     user.save()
   }
 
@@ -116,9 +116,9 @@ function transfer(pid: BigInt, userAddr: Address, block: ethereum.Block): void {
       .minus(user.rewardDebt.toBigDecimal())
       .div(BIG_DECIMAL_1E18)
     if (pending.gt(BIG_DECIMAL_ZERO)) {
-      user.sushiHarvestedSinceLockup = user.sushiHarvestedSinceLockup.plus(pending)
-      const sushiHarvestedUSD = pending.times(getSushiPrice(block))
-      user.sushiHarvestedSinceLockupUSD = user.sushiHarvestedSinceLockupUSD.plus(sushiHarvestedUSD)
+      user.soulHarvestedSinceLockup = user.soulHarvestedSinceLockup.plus(pending)
+      const soulHarvestedUSD = pending.times(getSushiPrice(block))
+      user.soulHarvestedSinceLockupUSD = user.soulHarvestedSinceLockupUSD.plus(soulHarvestedUSD)
     }
   }
   const userInfo = masterChefContract.userInfo(pid, userAddr)

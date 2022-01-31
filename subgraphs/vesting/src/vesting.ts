@@ -1,7 +1,7 @@
 import { BigInt, Address } from '@graphprotocol/graph-ts'
-import { SushiDistributor, Claimed } from '../generated/SushiDistributor/SushiDistributor'
+import { SoulDistributor, Claimed } from '../generated/SoulDistributor/SoulDistributor'
 import { User, Claim, Week } from '../generated/schema'
-import { BIG_DECIMAL_ZERO, BIG_DECIMAL_1E18, BIG_INT_ZERO, SUSHI_DISTRIBUTOR_ADDRESS } from 'const'
+import { BIG_DECIMAL_ZERO, BIG_DECIMAL_1E18, BIG_INT_ZERO, SOUL_DISTRIBUTOR_ADDRESS } from 'const'
 
 export function getUser(address: Address): User {
   let id = address.toHexString()
@@ -21,7 +21,7 @@ export function getWeek(weekNumber: BigInt): Week {
   let week = Week.load(id)
 
   if (week === null) {
-    let Distributor = SushiDistributor.bind(SUSHI_DISTRIBUTOR_ADDRESS)
+    let Distributor = SoulDistributor.bind(SOUL_DISTRIBUTOR_ADDRESS)
 
     week = new Week(id)
     week.totalClaimed = BIG_DECIMAL_ZERO

@@ -182,10 +182,10 @@
   },
   {
     "inputs": [],
-    "name": "bentoBox",
+    "name": "coffinBox",
     "outputs": [
       {
-        "internalType": "contract IBentoBoxFactory",
+        "internalType": "contract ICoffinBoxFactory",
         "name": "",
         "type": "address"
       }
@@ -373,7 +373,7 @@
       },
       {
         "internalType": "address",
-        "name": "_bentoBox",
+        "name": "_coffinBox",
         "type": "address"
       },
       {

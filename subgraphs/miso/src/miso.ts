@@ -6,7 +6,7 @@ import {
   BIG_INT_ONE,
   BIG_INT_ZERO,
   SUSHI_BAR_ADDRESS,
-  SUSHI_TOKEN_ADDRESS,
+  SOUL_TOKEN_ADDRESS,
   SUSHI_USDT_PAIR_ADDRESS,
 } from 'const'
 import { Address, BigDecimal, BigInt, dataSource, ethereum, log } from '@graphprotocol/graph-ts'

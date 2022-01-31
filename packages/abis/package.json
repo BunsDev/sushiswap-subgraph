@@ -10,15 +10,6 @@
     "scripts": {
         "codegen": "true",
         "build": "true",
-        "prepare:bsc": "true",
-        "prepare:fantom": "true",
-        "prepare:goerli": "true",
-        "prepare:kovan": "true",
-        "prepare:mainnet": "true",
-        "prepare:matic": "true",
-        "prepare:rinkeby": "true",
-        "prepare:ropsten": "true",
-        "prepare:xdai": "true",
-        "prepare:fuse": "true"
+        "prepare:fantom": "true"
     }
 }

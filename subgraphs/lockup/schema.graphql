@@ -52,8 +52,8 @@ type User @entity {
   rewardDebt: BigInt!
 
   # Sushi Harevested Since Lockup
-  sushiHarvestedSinceLockup: BigDecimal!
+  soulHarvestedSinceLockup: BigDecimal!
   
   # Sushi harvested since lockup USD
-  sushiHarvestedSinceLockupUSD: BigDecimal!
+  soulHarvestedSinceLockupUSD: BigDecimal!
 }

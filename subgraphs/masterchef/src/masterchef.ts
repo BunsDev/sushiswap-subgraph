@@ -104,8 +104,8 @@ export function getPool(id: BigInt, block: ethereum.Block): Pool {
     pool.updatedAt = block.timestamp
     pool.entryUSD = BIG_DECIMAL_ZERO
     pool.exitUSD = BIG_DECIMAL_ZERO
-    pool.sushiHarvested = BIG_DECIMAL_ZERO
-    pool.sushiHarvestedUSD = BIG_DECIMAL_ZERO
+    pool.soulHarvested = BIG_DECIMAL_ZERO
+    pool.soulHarvestedUSD = BIG_DECIMAL_ZERO
     pool.save()
   }
 
@@ -153,8 +153,8 @@ function getPoolHistory(pool: Pool, block: ethereum.Block): PoolHistory {
     history.block = block.number
     history.entryUSD = BIG_DECIMAL_ZERO
     history.exitUSD = BIG_DECIMAL_ZERO
-    history.sushiHarvested = BIG_DECIMAL_ZERO
-    history.sushiHarvestedUSD = BIG_DECIMAL_ZERO
+    history.soulHarvested = BIG_DECIMAL_ZERO
+    history.soulHarvestedUSD = BIG_DECIMAL_ZERO
   }
 
   return history as PoolHistory
@@ -172,8 +172,8 @@ export function getUser(pid: BigInt, address: Address, block: ethereum.Block): U
     user.address = address
     user.amount = BIG_INT_ZERO
     user.rewardDebt = BIG_INT_ZERO
-    user.sushiHarvested = BIG_DECIMAL_ZERO
-    user.sushiHarvestedUSD = BIG_DECIMAL_ZERO
+    user.soulHarvested = BIG_DECIMAL_ZERO
+    user.soulHarvestedUSD = BIG_DECIMAL_ZERO
     user.entryUSD = BIG_DECIMAL_ZERO
     user.exitUSD = BIG_DECIMAL_ZERO
     user.timestamp = block.timestamp
@@ -336,13 +336,13 @@ export function deposit(event: Deposit): void {
     // log.info('Deposit: User amount is more than zero, we should harvest {} sushi', [pending.toString()])
     if (pending.gt(BIG_DECIMAL_ZERO)) {
       // log.info('Harvesting {} SUSHI', [pending.toString()])
-      const sushiHarvestedUSD = pending.times(getSushiPrice(event.block))
-      user.sushiHarvested = user.sushiHarvested.plus(pending)
-      user.sushiHarvestedUSD = user.sushiHarvestedUSD.plus(sushiHarvestedUSD)
-      pool.sushiHarvested = pool.sushiHarvested.plus(pending)
-      pool.sushiHarvestedUSD = pool.sushiHarvestedUSD.plus(sushiHarvestedUSD)
-      poolHistory.sushiHarvested = pool.sushiHarvested
-      poolHistory.sushiHarvestedUSD = pool.sushiHarvestedUSD
+      const soulHarvestedUSD = pending.times(getSushiPrice(event.block))
+      user.soulHarvested = user.soulHarvested.plus(pending)
+      user.soulHarvestedUSD = user.soulHarvestedUSD.plus(soulHarvestedUSD)
+      pool.soulHarvested = pool.soulHarvested.plus(pending)
+      pool.soulHarvestedUSD = pool.soulHarvestedUSD.plus(soulHarvestedUSD)
+      poolHistory.soulHarvested = pool.soulHarvested
+      poolHistory.soulHarvestedUSD = pool.soulHarvestedUSD
     }
   }
 
@@ -491,13 +491,13 @@ export function withdraw(event: Withdraw): void {
       //   pending.toString(),
       //   getSushiPrice(event.block).toString(),
       // ])
-      const sushiHarvestedUSD = pending.times(getSushiPrice(event.block))
-      user.sushiHarvested = user.sushiHarvested.plus(pending)
-      user.sushiHarvestedUSD = user.sushiHarvestedUSD.plus(sushiHarvestedUSD)
-      pool.sushiHarvested = pool.sushiHarvested.plus(pending)
-      pool.sushiHarvestedUSD = pool.sushiHarvestedUSD.plus(sushiHarvestedUSD)
-      poolHistory.sushiHarvested = pool.sushiHarvested
-      poolHistory.sushiHarvestedUSD = pool.sushiHarvestedUSD
+      const soulHarvestedUSD = pending.times(getSushiPrice(event.block))
+      user.soulHarvested = user.soulHarvested.plus(pending)
+      user.soulHarvestedUSD = user.soulHarvestedUSD.plus(soulHarvestedUSD)
+      pool.soulHarvested = pool.soulHarvested.plus(pending)
+      pool.soulHarvestedUSD = pool.soulHarvestedUSD.plus(soulHarvestedUSD)
+      poolHistory.soulHarvested = pool.soulHarvested
+      poolHistory.soulHarvestedUSD = pool.soulHarvestedUSD
     }
   }
 

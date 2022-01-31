@@ -30,17 +30,17 @@ export const LOCKUP_BLOCK_NUMBER = BigInt.fromI32(10959148)
 
 export const MASTER_CHEF_START_BLOCK = BigInt.fromI32(10750000)
 
-export const UNISWAP_SUSHI_ETH_PAIR_FIRST_LIQUDITY_BLOCK = BigInt.fromI32(10750005)
+export const UNISWAP_SOUL_ETH_PAIR_FIRST_LIQUDITY_BLOCK = BigInt.fromI32(10750005)
 
 export const ACC_SUSHI_PRECISION = BigInt.fromString('1000000000000')
 
-export const BENTOBOX_DEPOSIT = 'deposit'
+export const COFFINBOX_DEPOSIT = 'deposit'
 
-export const BENTOBOX_TRANSFER = 'transfer'
+export const COFFINBOX_TRANSFER = 'transfer'
 
-export const BENTOBOX_WITHDRAW = 'withdraw'
+export const COFFINBOX_WITHDRAW = 'withdraw'
 
-export const KASHI_PAIR_MEDIUM_RISK_TYPE = 'medium'
+export const UNDERWORLD_PAIR_MEDIUM_RISK_TYPE = 'medium'
 
 export const PAIR_ADD_COLLATERAL = 'addCollateral'
 
@@ -72,7 +72,7 @@ export const SUSHI_MAKER_ADDRESS = Address.fromString(
   '{{ sushi_maker_address }}{{^sushi_maker_address}}0x0000000000000000000000000000000000000000{{/sushi_maker_address}}'
 )
 
-export const SUSHI_TOKEN_ADDRESS = Address.fromString(
+export const SOUL_TOKEN_ADDRESS = Address.fromString(
   '{{ soul_address }}{{^soul_address}}0x0000000000000000000000000000000000000000{{/soul_address}}'
 )
 
@@ -88,7 +88,7 @@ export const XSUSHI_WETH_PAIR_ADDRESS = Address.fromString(
   '{{ xsushi_weth_pair_address }}{{^xsushi_weth_pair_address}}0x0000000000000000000000000000000000000000{{/xsushi_weth_pair_address}}'
 )
 
-export const SUSHI_DISTRIBUTOR_ADDRESS = Address.fromString(
+export const SOUL_DISTRIBUTOR_ADDRESS = Address.fromString(
   '{{ sushi_distributor_address }}{{^sushi_distributor_address}}0x0000000000000000000000000000000000000000{{/sushi_distributor_address}}'
 )
 
@@ -140,13 +140,13 @@ export const UNISWAP_SUSHI_USDT_PAIR_ADDRESS = Address.fromString(
   '{{ uniswap_sushi_usdt_pair_address }}{{^uniswap_sushi_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/uniswap_sushi_usdt_pair_address}}'
 )
 
-// Bentobox constants
-export const BENTOBOX_ADDRESS = Address.fromString(
-  '{{ bentobox_address }}{{^bentobox_address}}0x0000000000000000000000000000000000000000{{/bentobox_address}}'
+// Coffinbox constants
+export const COFFINBOX_ADDRESS = Address.fromString(
+  '{{ coffinbox_address }}{{^coffinbox_address}}0x0000000000000000000000000000000000000000{{/coffinbox_address}}'
 )
 
-export const KASHI_PAIR_MEDIUM_RISK_MASTER_ADDRESS = Address.fromString(
-  '{{ kashi_pair_medium_risk_master_address }}{{^kashi_pair_medium_risk_master_address}}0x0000000000000000000000000000000000000000{{/kashi_pair_medium_risk_master_address}}'
+export const UNDERWORLD_PAIR_MEDIUM_RISK_MASTER_ADDRESS = Address.fromString(
+  '{{ underworld_pair_medium_risk_master_address }}{{^underworld_pair_medium_risk_master_address}}0x0000000000000000000000000000000000000000{{/underworld_pair_medium_risk_master_address}}'
 )
 
 // MiniChef

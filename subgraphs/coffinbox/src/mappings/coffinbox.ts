@@ -1,11 +1,11 @@
 import {
-  BENTOBOX_DEPOSIT,
-  BENTOBOX_TRANSFER,
-  BENTOBOX_WITHDRAW,
+  COFFINBOX_DEPOSIT,
+  COFFINBOX_TRANSFER,
+  COFFINBOX_WITHDRAW,
   BIG_INT_ONE,
   BIG_INT_ZERO,
-  KASHI_PAIR_MEDIUM_RISK_MASTER_ADDRESS,
-  KASHI_PAIR_MEDIUM_RISK_TYPE,
+  UNDERWORLD_PAIR_MEDIUM_RISK_MASTER_ADDRESS,
+  UNDERWORLD_PAIR_MEDIUM_RISK_TYPE,
 } from 'const'
 import {
   LogDeploy,
@@ -22,7 +22,7 @@ import {
   LogStrategyDivest,
   LogStrategyProfit,
   LogStrategyLoss,
-} from '../../generated/BentoBox/BentoBox'
+} from '../../generated/CoffinBox/CoffinBox'
 import { Token, User, FlashLoan, Protocol, Clone, StrategyHarvest } from '../../generated/schema'
 import {
   getToken,
@@ -30,38 +30,38 @@ import {
   getUserToken,
   getMasterContractApproval,
   getMasterContract,
-  createBentoBoxAction,
-  createKashiPair,
+  createCoffinBoxAction,
+  createUnderworldPair,
   createFlashLoan,
   getOrCreateStrategy,
 } from '../entities'
 
-import { KashiPair as PairTemplate } from '../../generated/templates'
+import { UnderworldPair as PairTemplate } from '../../generated/templates'
 import { Address, BigInt, log } from '@graphprotocol/graph-ts'
 
 export function handleLogDeploy(event: LogDeploy): void {
-  log.info('[BentoBox] Log Deploy {} {} {}', [
+  log.info('[CoffinBox] Log Deploy {} {} {}', [
     event.params.masterContract.toHex(),
     event.params.data.toHex(),
     event.params.cloneAddress.toHex(),
   ])
 
   let clone = new Clone(event.params.cloneAddress.toHex())
-  clone.bentoBox = event.address.toHex()
+  clone.coffinBox = event.address.toHex()
   clone.masterContract = event.params.masterContract.toHex()
   clone.data = event.params.data.toHex()
   clone.block = event.block.number
   clone.timestamp = event.block.timestamp
   clone.save()
 
-  if (event.params.masterContract == KASHI_PAIR_MEDIUM_RISK_MASTER_ADDRESS) {
-    createKashiPair(event.params.cloneAddress, event.block, KASHI_PAIR_MEDIUM_RISK_TYPE)
+  if (event.params.masterContract == UNDERWORLD_PAIR_MEDIUM_RISK_MASTER_ADDRESS) {
+    createUnderworldPair(event.params.cloneAddress, event.block, UNDERWORLD_PAIR_MEDIUM_RISK_TYPE)
     PairTemplate.create(event.params.cloneAddress)
   }
 }
 
 export function handleLogDeposit(event: LogDeposit): void {
-  log.info('[BentoBox] Log Deposit {} {} {} {} {}', [
+  log.info('[CoffinBox] Log Deposit {} {} {} {} {}', [
     event.params.token.toHex(),
     event.params.from.toHex(),
     event.params.to.toHex(),
@@ -81,11 +81,11 @@ export function handleLogDeposit(event: LogDeposit): void {
   userTokenData.share = userTokenData.share.plus(event.params.share)
   userTokenData.save()
 
-  createBentoBoxAction(event, BENTOBOX_DEPOSIT)
+  createCoffinBoxAction(event, COFFINBOX_DEPOSIT)
 }
 
 export function handleLogWithdraw(event: LogWithdraw): void {
-  log.info('[BentoBox] Log Withdraw {} {} {} {} {}', [
+  log.info('[CoffinBox] Log Withdraw {} {} {} {} {}', [
     event.params.token.toHex(),
     event.params.from.toHex(),
     event.params.to.toHex(),
@@ -105,11 +105,11 @@ export function handleLogWithdraw(event: LogWithdraw): void {
   userTokenData.share = userTokenData.share.minus(event.params.share)
   userTokenData.save()
 
-  createBentoBoxAction(event, BENTOBOX_WITHDRAW)
+  createCoffinBoxAction(event, COFFINBOX_WITHDRAW)
 }
 
 export function handleLogTransfer(event: LogTransfer): void {
-  log.info('[BentoBox] Log Transfer {} {} {} {}', [
+  log.info('[CoffinBox] Log Transfer {} {} {} {}', [
     event.params.token.toHex(),
     event.params.from.toHex(),
     event.params.to.toHex(),
@@ -128,11 +128,11 @@ export function handleLogTransfer(event: LogTransfer): void {
   receiver.share = receiver.share.plus(event.params.share)
   receiver.save()
 
-  createBentoBoxAction(event, BENTOBOX_TRANSFER)
+  createCoffinBoxAction(event, COFFINBOX_TRANSFER)
 }
 
 export function handleLogFlashLoan(event: LogFlashLoan): void {
-  log.info('[BentoBox] Log Flash Loan {} {} {} {} {}', [
+  log.info('[CoffinBox] Log Flash Loan {} {} {} {} {}', [
     event.params.borrower.toHex(),
     event.params.token.toHex(),
     event.params.amount.toString(),
@@ -148,7 +148,7 @@ export function handleLogFlashLoan(event: LogFlashLoan): void {
 }
 
 export function handleLogWhiteListMasterContract(event: LogWhiteListMasterContract): void {
-  log.info('[BentoBox] Log White List Master Contract {} {}', [
+  log.info('[CoffinBox] Log White List Master Contract {} {}', [
     event.params.masterContract.toHex(),
     event.params.approved == true ? 'true' : 'false',
   ])
@@ -159,7 +159,7 @@ export function handleLogWhiteListMasterContract(event: LogWhiteListMasterContra
 }
 
 export function handleLogMasterContractApproval(event: LogSetMasterContractApproval): void {
-  log.info('[BentoBox] Log Set Master Contract Approval {} {} {}', [
+  log.info('[CoffinBox] Log Set Master Contract Approval {} {} {}', [
     event.params.masterContract.toHex(),
     event.params.user.toHex(),
     event.params.approved == true ? 'true' : 'false',
@@ -172,7 +172,7 @@ export function handleLogMasterContractApproval(event: LogSetMasterContractAppro
 }
 
 export function handleLogRegisterProtocol(event: LogRegisterProtocol): void {
-  log.info('[BentoBox] Log Register Protocol {}', [event.params.protocol.toHex()])
+  log.info('[CoffinBox] Log Register Protocol {}', [event.params.protocol.toHex()])
 
   let registeredProtocol = Protocol.load(event.params.protocol.toHex())
   if (registeredProtocol === null) {
@@ -182,7 +182,7 @@ export function handleLogRegisterProtocol(event: LogRegisterProtocol): void {
 }
 
 export function handleLogStrategySet(event: LogStrategySet): void {
-  log.info('[BentoBox] Log Strategy Set {} {}', [event.params.strategy.toHex(), event.params.token.toHex()])
+  log.info('[CoffinBox] Log Strategy Set {} {}', [event.params.strategy.toHex(), event.params.token.toHex()])
 
   const token = getToken(event.params.token, event.block)
   token.strategy = event.params.strategy.toHex()
@@ -192,7 +192,7 @@ export function handleLogStrategySet(event: LogStrategySet): void {
 }
 
 export function handleLogStrategyTargetPercentage(event: LogStrategyTargetPercentage): void {
-  log.info('[BentoBox] Log Strategy Target Percentage {} {}', [
+  log.info('[CoffinBox] Log Strategy Target Percentage {} {}', [
     event.params.token.toHex(),
     event.params.targetPercentage.toString(),
   ])
@@ -203,7 +203,7 @@ export function handleLogStrategyTargetPercentage(event: LogStrategyTargetPercen
 }
 
 export function handleLogStrategyInvest(event: LogStrategyInvest): void {
-  log.info('[BentoBox] Log Strategy Invest {} {}', [event.params.token.toHex(), event.params.amount.toString()])
+  log.info('[CoffinBox] Log Strategy Invest {} {}', [event.params.token.toHex(), event.params.amount.toString()])
 
   const token = getToken(event.params.token, event.block)
 
@@ -218,7 +218,7 @@ export function handleLogStrategyInvest(event: LogStrategyInvest): void {
 }
 
 export function handleLogStrategyDivest(event: LogStrategyDivest): void {
-  log.info('[BentoBox] Log Strategy Divest {} {}', [event.params.token.toHex(), event.params.amount.toString()])
+  log.info('[CoffinBox] Log Strategy Divest {} {}', [event.params.token.toHex(), event.params.amount.toString()])
 
   const token = getToken(event.params.token, event.block)
 
@@ -233,7 +233,7 @@ export function handleLogStrategyDivest(event: LogStrategyDivest): void {
 }
 
 export function handleLogStrategyProfit(event: LogStrategyProfit): void {
-  log.info('[BentoBox] Log Strategy Profit {} {}', [event.params.token.toHex(), event.params.amount.toString()])
+  log.info('[CoffinBox] Log Strategy Profit {} {}', [event.params.token.toHex(), event.params.amount.toString()])
 
   const token = getToken(event.params.token, event.block)
   token.totalSupplyElastic = token.totalSupplyElastic.plus(event.params.amount)
@@ -258,7 +258,7 @@ export function handleLogStrategyProfit(event: LogStrategyProfit): void {
 }
 
 export function handleLogStrategyLoss(event: LogStrategyLoss): void {
-  log.info('[BentoBox] Log Strategy Loss {} {}', [event.params.token.toHex(), event.params.amount.toString()])
+  log.info('[CoffinBox] Log Strategy Loss {} {}', [event.params.token.toHex(), event.params.amount.toString()])
 
   const token = getToken(event.params.token, event.block)
   token.totalSupplyElastic = token.totalSupplyElastic.minus(event.params.amount)

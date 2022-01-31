@@ -6,10 +6,10 @@ import {
   BIG_DECIMAL_ZERO,
   FACTORY_ADDRESS,
   SUSHISWAP_WETH_USDT_PAIR_ADDRESS,
-  SUSHI_TOKEN_ADDRESS,
+  SOUL_TOKEN_ADDRESS,
   SUSHI_USDT_PAIR_ADDRESS,
   UNISWAP_FACTORY_ADDRESS,
-  UNISWAP_SUSHI_ETH_PAIR_FIRST_LIQUDITY_BLOCK,
+  UNISWAP_SOUL_ETH_PAIR_FIRST_LIQUDITY_BLOCK,
   UNISWAP_SUSHI_USDT_PAIR_ADDRESS,
   UNISWAP_WETH_USDT_PAIR_ADDRESS,
   USDT_ADDRESS,
@@ -77,12 +77,12 @@ export function getEthRate(token: Address, block: ethereum.Block): BigDecimal {
 }
 
 export function getSushiPrice(block: ethereum.Block): BigDecimal {
-  if (block.number.lt(UNISWAP_SUSHI_ETH_PAIR_FIRST_LIQUDITY_BLOCK)) {
+  if (block.number.lt(UNISWAP_SOUL_ETH_PAIR_FIRST_LIQUDITY_BLOCK)) {
     // If before uniswap sushi-eth pair creation and liquidity added, return zero
     return BIG_DECIMAL_ZERO
   } else if (block.number.lt(BigInt.fromI32(10800029))) {
     // Else if before uniswap sushi-usdt pair creation (get price from eth sushi-eth pair above)
-    return getUSDRate(SUSHI_TOKEN_ADDRESS, block)
+    return getUSDRate(SOUL_TOKEN_ADDRESS, block)
   } else {
     // Else get price from either uni or sushi usdt pair depending on space-time
     const pair = PairContract.bind(
