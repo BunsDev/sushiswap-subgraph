@@ -1,5 +1,6 @@
 {
     "network": "fantom",
-    "address": "",
-    "startBlock": "2457879"
+    "address": "0xce6ccbb1edad497b4d53d829df491af70065ab5b",
+    "startBlock": "15000000",
+    "startTime": "1632170016"
 }

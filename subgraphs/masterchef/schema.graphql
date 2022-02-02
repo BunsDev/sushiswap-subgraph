@@ -6,26 +6,23 @@ type MasterChef @entity {
   # Bonus multiplier
   bonusMultiplier: BigInt!
 
-  # Bonus end block
-  bonusEndBlock: BigInt!
-
-  # Dev fund address
-  devaddr: Bytes!
+  # Bonus end time
+  bonusEndTime: BigInt!
 
   # Migrator
   migrator: Bytes!
 
-  # Owner
-  owner: Bytes!
+  # Start Time
+  startTime: BigInt!
 
-  # Start block
+  # Start Block
   startBlock: BigInt!
 
-  # Sushi
-  sushi: Bytes!
+  # Soul
+  soul: Bytes!
 
-  # Sushi per block
-  sushiPerBlock: BigInt!
+  # Soul per Second
+  soulPerSecond: BigInt!
 
   # Total allocation point
   totalAllocPoint: BigInt!
@@ -102,10 +99,10 @@ type Pool @entity {
   allocPoint: BigInt!
 
   # Last reward block
-  lastRewardBlock: BigInt!
+  lastRewardTime: BigInt!
 
-  # Accumulated sushi per share
-  accSushiPerShare: BigInt!
+  # Accumulated soul per share
+  accSoulPerShare: BigInt!
 
   # SLP token balance
   balance: BigInt!
@@ -146,10 +143,10 @@ type Pool @entity {
   # Exit USD
   exitUSD: BigDecimal!
 
-  # Sushi harvested
+  # Soul harvested
   soulHarvested: BigDecimal!
 
-  # Sushi harvested
+  # Soul harvested
   soulHarvestedUSD: BigDecimal!
 }
 
@@ -190,10 +187,10 @@ type PoolHistory @entity {
   # Exit USD
   exitUSD: BigDecimal!
 
-  # Sushi harvested
+  # Soul harvested
   soulHarvested: BigDecimal!
 
-  # Sushi harvested
+  # Soul harvested
   soulHarvestedUSD: BigDecimal!
 }
 
@@ -207,11 +204,11 @@ type User @entity {
   # Related pool
   pool: Pool
 
-  # We do some fancy math here. Basically, any point in time, the amount of SUSHIs
+  # We do some fancy math here. Basically, any point in time, the amount of SOULs
   # entitled to a user but is pending to be distributed is:
-  # pending reward = (user.amount * pool.accSushiPerShare) - user.rewardDebt
+  # pending reward = (user.amount * pool.accSoulPerShare) - user.rewardDebt
   # Whenever a user deposits or withdraws LP tokens to a pool. Here's what happens:
-  # 1. The pool's `accSushiPerShare` (and `lastRewardBlock`) gets updated.
+  # 1. The pool's `accSoulPerShare` (and `lastRewardTime`) gets updated.
   # 2. User receives the pending reward sent to his/her address.
   # 3. User's `amount` gets updated.
   # 4. User's `rewardDebt` gets updated.
@@ -228,10 +225,10 @@ type User @entity {
   # Exit USD
   exitUSD: BigDecimal!
 
-  # Sushi harvested
+  # Soul harvested
   soulHarvested: BigDecimal!
 
-  # Sushi harvested
+  # Soul harvested
   soulHarvestedUSD: BigDecimal!
 
   # Timestamp

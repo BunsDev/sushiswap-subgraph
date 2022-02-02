@@ -11,11 +11,11 @@ Current subgraph locations:
 
 2. **Master Chef**: Indexes all MasterChef staking data: https://thegraph.com/explorer/subgraph/soulswapfinance/master-chef
 
-3. **Sushi Timelock**: Includes all of the timelock transactions queued, executed, and cancelled: https://thegraph.com/explorer/subgraph/sushiswap/sushi-timelock
+3. **Soul Timelock**: Includes all of the timelock transactions queued, executed, and cancelled: https://thegraph.com/explorer/subgraph/sushiswap/sushi-timelock
 
-4. **Sushi Bar**: Indexes the SushiBar, includes data related to the bar: https://thegraph.com/explorer/subgraph/sushiswap/sushi-bar
+4. **Soul Bar**: Indexes the SoulBar, includes data related to the bar: https://thegraph.com/explorer/subgraph/sushiswap/sushi-bar
 
-5. **SushiSwap-SubGraph-Fork** (on uniswap-fork branch): Indexes the SushiSwap Factory, includes Price Data, Pricing, etc: https://thegraph.com/explorer/subgraph/jiro-ono/sushiswap-v1-exchange
+5. **SoulSwap-SubGraph-Fork** (on uniswap-fork branch): Indexes the SoulSwap Factory, includes Price Data, Pricing, etc: https://thegraph.com/explorer/subgraph/jiro-ono/sushiswap-v1-exchange
 
 6. **CoffinBox**: Indexes CoffinBox and Underworld Lending data: https://thegraph.com/explorer/subgraph/sushiswap/coffinbox
 

@@ -1,12 +1,9 @@
 import {
-  AddCall,
+  AddPoolCall,
   Deposit,
-  DevCall,
-  EmergencyWithdraw,
   MassUpdatePoolsCall,
   MasterChef as MasterChefContract,
   MigrateCall,
-  OwnershipTransferred,
   SetCall,
   SetMigratorCall,
   UpdatePoolCall,
@@ -24,7 +21,7 @@ import {
   MASTER_CHEF_START_BLOCK,
 } from 'const'
 import { History, MasterChef, Pool, PoolHistory, User } from '../generated/schema'
-import { getSushiPrice, getUSDRate } from 'pricing'
+import { getSoulPrice, getUSDRate } from 'pricing'
 
 import { ERC20 as ERC20Contract } from '../generated/MasterChef/ERC20'
 import { Pair as PairContract } from '../generated/MasterChef/Pair'
@@ -35,15 +32,12 @@ function getMasterChef(block: ethereum.Block): MasterChef {
   if (masterChef === null) {
     const contract = MasterChefContract.bind(MASTER_CHEF_ADDRESS)
     masterChef = new MasterChef(MASTER_CHEF_ADDRESS.toHex())
-    masterChef.bonusMultiplier = contract.BONUS_MULTIPLIER()
-    masterChef.bonusEndBlock = contract.bonusEndBlock()
-    masterChef.devaddr = contract.devaddr()
+    masterChef.bonusMultiplier = contract.bonusMultiplier()
     masterChef.migrator = contract.migrator()
-    masterChef.owner = contract.owner()
     // poolInfo ...
-    masterChef.startBlock = contract.startBlock()
-    masterChef.sushi = contract.sushi()
-    masterChef.sushiPerBlock = contract.sushiPerBlock()
+    masterChef.startTime = contract.startTime()
+    masterChef.soul = contract.soul()
+    masterChef.soulPerSecond = contract.soulPerSecond()
     masterChef.totalAllocPoint = contract.totalAllocPoint()
     // userInfo ...
     masterChef.poolCount = BIG_INT_ZERO
@@ -85,8 +79,8 @@ export function getPool(id: BigInt, block: ethereum.Block): Pool {
 
     pool.pair = poolInfo.value0
     pool.allocPoint = poolInfo.value1
-    pool.lastRewardBlock = poolInfo.value2
-    pool.accSushiPerShare = poolInfo.value3
+    pool.lastRewardTime = poolInfo.value2
+    pool.accSoulPerShare = poolInfo.value3
 
     // Total supply of LP tokens
     pool.balance = BIG_INT_ZERO
@@ -184,7 +178,7 @@ export function getUser(pid: BigInt, address: Address, block: ethereum.Block): U
   return user as User
 }
 
-export function add(event: AddCall): void {
+export function addPool(event: AddPoolCall): void {
   const masterChef = getMasterChef(event.block)
 
   log.info('Add pool #{}', [masterChef.poolCount.toString()])
@@ -205,21 +199,21 @@ export function add(event: AddCall): void {
 // Calls
 export function set(call: SetCall): void {
   log.info('Set pool id: {} allocPoint: {} withUpdate: {}', [
-    call.inputs._pid.toString(),
-    call.inputs._allocPoint.toString(),
-    call.inputs._withUpdate ? 'true' : 'false',
+    call.inputs.pid.toString(),
+    call.inputs.allocPoint.toString(),
+    call.inputs.withUpdate ? 'true' : 'false',
   ])
 
-  const pool = getPool(call.inputs._pid, call.block)
+  const pool = getPool(call.inputs.pid, call.block)
 
   const masterChef = getMasterChef(call.block)
 
   // Update masterchef
-  masterChef.totalAllocPoint = masterChef.totalAllocPoint.plus(call.inputs._allocPoint.minus(pool.allocPoint))
+  masterChef.totalAllocPoint = masterChef.totalAllocPoint.plus(call.inputs.allocPoint.minus(pool.allocPoint))
   masterChef.save()
 
   // Update pool
-  pool.allocPoint = call.inputs._allocPoint
+  pool.allocPoint = call.inputs.allocPoint
   pool.save()
 }
 
@@ -231,49 +225,19 @@ export function setMigrator(call: SetMigratorCall): void {
   masterChef.save()
 }
 
-export function migrate(call: MigrateCall): void {
-  const masterChefContract = MasterChefContract.bind(MASTER_CHEF_ADDRESS)
-
-  const pool = getPool(call.inputs._pid, call.block)
-
-  const poolInfo = masterChefContract.poolInfo(call.inputs._pid)
-
-  const pair = poolInfo.value0
-
-  const pairContract = PairContract.bind(pair as Address)
-
-  pool.pair = pair
-
-  const balance = pairContract.balanceOf(MASTER_CHEF_ADDRESS)
-
-  pool.balance = balance
-
-  pool.save()
-}
-
 export function massUpdatePools(call: MassUpdatePoolsCall): void {
   log.info('Mass update pools', [])
 }
 
 export function updatePool(call: UpdatePoolCall): void {
-  log.info('Update pool id {}', [call.inputs._pid.toString()])
+  log.info('Update pool id {}', [call.inputs.pid.toString()])
 
   const masterChef = MasterChefContract.bind(MASTER_CHEF_ADDRESS)
-  const poolInfo = masterChef.poolInfo(call.inputs._pid)
-  const pool = getPool(call.inputs._pid, call.block)
-  pool.lastRewardBlock = poolInfo.value2
-  pool.accSushiPerShare = poolInfo.value3
+  const poolInfo = masterChef.poolInfo(call.inputs.pid)
+  const pool = getPool(call.inputs.pid, call.block)
+  pool.lastRewardTime = poolInfo.value2
+  pool.accSoulPerShare = poolInfo.value3
   pool.save()
-}
-
-export function dev(call: DevCall): void {
-  log.info('Dev changed to {}', [call.inputs._devaddr.toHex()])
-
-  const masterChef = getMasterChef(call.block)
-
-  masterChef.devaddr = call.inputs._devaddr
-
-  masterChef.save()
 }
 
 // Events
@@ -304,8 +268,8 @@ export function deposit(event: Deposit): void {
   const pairContract = PairContract.bind(poolInfo.value0)
   pool.balance = pairContract.balanceOf(MASTER_CHEF_ADDRESS)
 
-  pool.lastRewardBlock = poolInfo.value2
-  pool.accSushiPerShare = poolInfo.value3
+  pool.lastRewardTime = poolInfo.value2
+  pool.accSoulPerShare = poolInfo.value3
 
   const poolDays = event.block.timestamp.minus(pool.updatedAt).divDecimal(BigDecimal.fromString('86400'))
   pool.slpAge = pool.slpAge.plus(poolDays.times(pool.slpBalance))
@@ -325,18 +289,18 @@ export function deposit(event: Deposit): void {
     pool.userCount = pool.userCount.plus(BIG_INT_ONE)
   }
 
-  // Calculate SUSHI being paid out
+  // Calculate SOUL being paid out
   if (event.block.number.gt(MASTER_CHEF_START_BLOCK) && user.amount.gt(BIG_INT_ZERO)) {
     const pending = user.amount
       .toBigDecimal()
-      .times(pool.accSushiPerShare.toBigDecimal())
+      .times(pool.accSoulPerShare.toBigDecimal())
       .div(BIG_DECIMAL_1E12)
       .minus(user.rewardDebt.toBigDecimal())
       .div(BIG_DECIMAL_1E18)
-    // log.info('Deposit: User amount is more than zero, we should harvest {} sushi', [pending.toString()])
+    // log.info('Deposit: User amount is more than zero, we should harvest {} soul', [pending.toString()])
     if (pending.gt(BIG_DECIMAL_ZERO)) {
-      // log.info('Harvesting {} SUSHI', [pending.toString()])
-      const soulHarvestedUSD = pending.times(getSushiPrice(event.block))
+      // log.info('Harvesting {} SOUL', [pending.toString()])
+      const soulHarvestedUSD = pending.times(getSoulPrice(event.block))
       user.soulHarvested = user.soulHarvested.plus(pending)
       user.soulHarvestedUSD = user.soulHarvestedUSD.plus(soulHarvestedUSD)
       pool.soulHarvested = pool.soulHarvested.plus(pending)
@@ -460,8 +424,8 @@ export function withdraw(event: Withdraw): void {
 
   const pairContract = PairContract.bind(poolInfo.value0)
   pool.balance = pairContract.balanceOf(MASTER_CHEF_ADDRESS)
-  pool.lastRewardBlock = poolInfo.value2
-  pool.accSushiPerShare = poolInfo.value3
+  pool.lastRewardTime = poolInfo.value2
+  pool.accSoulPerShare = poolInfo.value3
 
   const poolDays = event.block.timestamp.minus(pool.updatedAt).divDecimal(BigDecimal.fromString('86400'))
   const poolAge = pool.slpAge.plus(poolDays.times(pool.slpBalance))
@@ -477,21 +441,21 @@ export function withdraw(event: Withdraw): void {
   if (event.block.number.gt(MASTER_CHEF_START_BLOCK) && user.amount.gt(BIG_INT_ZERO)) {
     const pending = user.amount
       .toBigDecimal()
-      .times(pool.accSushiPerShare.toBigDecimal())
+      .times(pool.accSoulPerShare.toBigDecimal())
       .div(BIG_DECIMAL_1E12)
       .minus(user.rewardDebt.toBigDecimal())
       .div(BIG_DECIMAL_1E18)
-    // log.info('Withdraw: User amount is more than zero, we should harvest {} sushi - block: {}', [
+    // log.info('Withdraw: User amount is more than zero, we should harvest {} soul - block: {}', [
     //   pending.toString(),
     //   event.block.number.toString(),
     // ])
-    // log.info('SUSHI PRICE {}', [getSushiPrice(event.block).toString()])
+    // log.info('SOUL PRICE {}', [getSoulPrice(event.block).toString()])
     if (pending.gt(BIG_DECIMAL_ZERO)) {
-      // log.info('Harvesting {} SUSHI (CURRENT SUSHI PRICE {})', [
+      // log.info('Harvesting {} SOUL (CURRENT SOUL PRICE {})', [
       //   pending.toString(),
-      //   getSushiPrice(event.block).toString(),
+      //   getSoulPrice(event.block).toString(),
       // ])
-      const soulHarvestedUSD = pending.times(getSushiPrice(event.block))
+      const soulHarvestedUSD = pending.times(getSoulPrice(event.block))
       user.soulHarvested = user.soulHarvested.plus(pending)
       user.soulHarvestedUSD = user.soulHarvestedUSD.plus(soulHarvestedUSD)
       pool.soulHarvested = pool.soulHarvested.plus(pending)
@@ -585,32 +549,4 @@ export function withdraw(event: Withdraw): void {
   poolHistory.slpWithdrawn = poolHistory.slpWithdrawn.plus(amount)
   poolHistory.userCount = pool.userCount
   poolHistory.save()
-}
-
-export function emergencyWithdraw(event: EmergencyWithdraw): void {
-  log.info('User {} emergancy withdrawal of {} from pool #{}', [
-    event.params.user.toHex(),
-    event.params.amount.toString(),
-    event.params.pid.toString(),
-  ])
-
-  const pool = getPool(event.params.pid, event.block)
-
-  const pairContract = PairContract.bind(pool.pair as Address)
-  pool.balance = pairContract.balanceOf(MASTER_CHEF_ADDRESS)
-  pool.save()
-
-  // Update user
-  const user = getUser(event.params.pid, event.params.user, event.block)
-  user.amount = BIG_INT_ZERO
-  user.rewardDebt = BIG_INT_ZERO
-
-  user.save()
-}
-
-export function ownershipTransferred(event: OwnershipTransferred): void {
-  log.info('Ownership transfered from previous owner: {} to new owner: {}', [
-    event.params.previousOwner.toHex(),
-    event.params.newOwner.toHex(),
-  ])
 }

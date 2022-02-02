@@ -1,7 +1,7 @@
 import { Address, BigInt, log } from '@graphprotocol/graph-ts'
 
-import { StakingRewardsSushi as StakingRewardsContract} from '../../generated/templates/StakingRewardsSushi/StakingRewardsSushi'
-import { RewardAdded } from '../../generated/templates/StakingRewardsSushi/StakingRewardsSushi'
+import { StakingRewardsSoul as StakingRewardsContract} from '../../generated/templates/StakingRewardsSoul/StakingRewardsSoul'
+import { RewardAdded } from '../../generated/templates/StakingRewardsSoul/StakingRewardsSoul'
 import { getRewarder } from '../entities'
 
 export function rewardAdded(event: RewardAdded): void {

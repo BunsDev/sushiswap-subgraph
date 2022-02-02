@@ -5,7 +5,7 @@ type MasterChef @entity {
   #owner: Bytes!
   #migrator: Bytes!
 
-  #sushiPerBlock: BgInt! not needed till fully migrated over
+  #soulPerSecond: BgInt! not needed till fully migrated over
   totalAllocPoint: BigInt!
 
   pools: [Pool!] @derivedFrom(field: "masterChef")
@@ -23,26 +23,14 @@ type Pool @entity {
   masterChef: MasterChef!
   pair: Bytes!
 
-  rewarder: Rewarder
-
   allocPoint: BigInt!
-  lastRewardBlock: BigInt!
-  accSushiPerShare: BigInt!
+  lastRewardTime: BigInt!
+  accSoulPerShare: BigInt!
 
   slpBalance: BigInt!
 
   users: [User!]! @derivedFrom(field: "pool")
   userCount: BigInt!
-
-  timestamp: BigInt!
-  block: BigInt!
-}
-
-type Rewarder @entity {
-  # address
-  id: ID!
-  rewardToken: Bytes!
-  rewardPerSecond: BigInt!
 
   timestamp: BigInt!
   block: BigInt!

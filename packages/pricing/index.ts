@@ -5,12 +5,12 @@ import {
   BIG_DECIMAL_ONE,
   BIG_DECIMAL_ZERO,
   FACTORY_ADDRESS,
-  SUSHISWAP_WETH_USDT_PAIR_ADDRESS,
+  SOULSWAP_WETH_USDT_PAIR_ADDRESS,
   SOUL_TOKEN_ADDRESS,
-  SUSHI_USDT_PAIR_ADDRESS,
+  SOUL_USDT_PAIR_ADDRESS,
   UNISWAP_FACTORY_ADDRESS,
-  UNISWAP_SOUL_ETH_PAIR_FIRST_LIQUDITY_BLOCK,
-  UNISWAP_SUSHI_USDT_PAIR_ADDRESS,
+  SOULSWAP_SOUL_ETH_PAIR_FIRST_LIQUDITY_BLOCK,
+  UNISWAP_SOUL_USDT_PAIR_ADDRESS,
   UNISWAP_WETH_USDT_PAIR_ADDRESS,
   USDT_ADDRESS,
   WETH_ADDRESS,
@@ -26,7 +26,7 @@ export function getUSDRate(token: Address, block: ethereum.Block): BigDecimal {
   if (token != USDT_ADDRESS) {
     const address = block.number.le(BigInt.fromI32(10829344))
       ? UNISWAP_WETH_USDT_PAIR_ADDRESS
-      : SUSHISWAP_WETH_USDT_PAIR_ADDRESS
+      : SOULSWAP_WETH_USDT_PAIR_ADDRESS
 
     const tokenPriceETH = getEthRate(token, block)
 
@@ -76,8 +76,8 @@ export function getEthRate(token: Address, block: ethereum.Block): BigDecimal {
   return eth
 }
 
-export function getSushiPrice(block: ethereum.Block): BigDecimal {
-  if (block.number.lt(UNISWAP_SOUL_ETH_PAIR_FIRST_LIQUDITY_BLOCK)) {
+export function getSoulPrice(block: ethereum.Block): BigDecimal {
+  if (block.number.lt(SOULSWAP_SOUL_ETH_PAIR_FIRST_LIQUDITY_BLOCK)) {
     // If before uniswap sushi-eth pair creation and liquidity added, return zero
     return BIG_DECIMAL_ZERO
   } else if (block.number.lt(BigInt.fromI32(10800029))) {
@@ -86,7 +86,7 @@ export function getSushiPrice(block: ethereum.Block): BigDecimal {
   } else {
     // Else get price from either uni or sushi usdt pair depending on space-time
     const pair = PairContract.bind(
-      block.number.le(BigInt.fromI32(10829344)) ? UNISWAP_SUSHI_USDT_PAIR_ADDRESS : SUSHI_USDT_PAIR_ADDRESS
+      block.number.le(BigInt.fromI32(10829344)) ? UNISWAP_SOUL_USDT_PAIR_ADDRESS : SOUL_USDT_PAIR_ADDRESS
     )
     const reserves = pair.getReserves()
     return reserves.value1

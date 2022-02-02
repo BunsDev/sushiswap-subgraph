@@ -2,7 +2,7 @@
     "name": "miso",
     "license": "MIT",
     "version": "1.0.0",
-    "author": "SushiSwap",
+    "author": "SoulSwap",
     "scripts": {
         "codegen": "graph codegen subgraph.yaml",
         "build": "graph build subgraph.yaml",

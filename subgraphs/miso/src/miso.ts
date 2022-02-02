@@ -5,9 +5,9 @@ import {
   BIG_DECIMAL_ZERO,
   BIG_INT_ONE,
   BIG_INT_ZERO,
-  SUSHI_BAR_ADDRESS,
+  SOUL_BAR_ADDRESS,
   SOUL_TOKEN_ADDRESS,
-  SUSHI_USDT_PAIR_ADDRESS,
+  SOUL_USDT_PAIR_ADDRESS,
 } from 'const'
 import { Address, BigDecimal, BigInt, dataSource, ethereum, log } from '@graphprotocol/graph-ts'
 import { AuctionTemplateAdded, AuctionTemplateRemoved, MarketCreated } from '../generated/MISOMarket/MISOMarket'

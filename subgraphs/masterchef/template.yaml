@@ -1,6 +1,6 @@
 specVersion: 0.0.3
 description: Masterchef
-repository: https://github.com/sushiswap/sushiswap-subgraph
+repository: https://github.com/soulswapfinance/soulswap-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
@@ -23,24 +23,20 @@ dataSources:
         - User
       abis:
         - name: MasterChef
-          file: ../../node_modules/@sushiswap/core/build/abi/MasterChef.json
+          file: ../../packages/abis/MasterChef.json
         - name: Factory
-          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
+          file: ../../packages/abis/SoulSwapFactory.json
         - name: Pair
-          file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Pair.json
+          file: ../../packages/abis/SoulSwapPair.json
         - name: ERC20
           file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
       eventHandlers:
         - event: Deposit(indexed address,indexed uint256,uint256)
           handler: deposit
-        - event: EmergencyWithdraw(indexed address,indexed uint256,uint256)
-          handler: emergencyWithdraw
-        - event: OwnershipTransferred(indexed address,indexed address)
-          handler: ownershipTransferred
-        - event: Withdraw(indexed address,indexed uint256,uint256)
+        - event: Withdraw(indexed address,indexed uint256,uint256,uint256)
           handler: withdraw
       callHandlers:
-        - function: add(uint256,address,bool)
+        - function: addPool(uint256,address,bool)
           handler: add
         - function: set(uint256,uint256,bool)
           handler: set
@@ -48,10 +44,4 @@ dataSources:
           handler: massUpdatePools
         - function: updatePool(uint256)
           handler: updatePool
-        - function: setMigrator(address)
-          handler: setMigrator
-        - function: migrate(uint256)
-          handler: migrate
-        - function: dev(address)
-          handler: dev
       file: ./src/masterchef.ts

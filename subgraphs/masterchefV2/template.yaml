@@ -24,14 +24,8 @@ dataSources:
       abis:
         - name: MasterChefV2
           file: ./packages/abis/MasterChefV2.json
-        - name: ConvexRewarder
-          file: ./packages/abis/ConvexRewarder.json
-        - name: ComplexRewarder
-          file: ./packages/abis/ComplexRewarder.json
-        - name: CloneRewarderTime
-          file: ./packages/abis/CloneRewarderTime.json
-        - name: StakingRewardsSushi
-          file: ./packages/abis/StakingRewardsSushi.json
+        - name: StakingRewardsSoul
+          file: ./packages/abis/StakingRewardsSoul.json
         - name: Factory
           file: ../../node_modules/@sushiswap/core/build/abi/UniswapV2Factory.json
         - name: Pair
@@ -43,8 +37,6 @@ dataSources:
           handler: deposit
         - event: Withdraw(indexed address,indexed uint256,uint256,indexed address)
           handler: withdraw
-        - event: EmergencyWithdraw(indexed address,indexed uint256,uint256,indexed address)
-          handler: emergencyWithdraw
         - event: Harvest(indexed address,indexed uint256,uint256)
           handler: harvest
         - event: LogPoolAddition(indexed uint256,uint256,indexed address,indexed address)
@@ -73,10 +65,10 @@ templates:
         - event: LogRewardPerSecond(uint256)
           handler: logRewardPerSecond
   - kind: ethereum/contract
-    name: StakingRewardsSushi
+    name: StakingRewardsSoul
     network: {{ network }}
     source:
-      abi: StakingRewardsSushi
+      abi: StakingRewardsSoul
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -85,8 +77,8 @@ templates:
       entities:
         - Rewarder
       abis:
-        - name: StakingRewardsSushi
-          file: ./packages/abis/StakingRewardsSushi.json
+        - name: StakingRewardsSoul
+          file: ./packages/abis/StakingRewardsSoul.json
       eventHandlers:
         - event: RewardAdded(uint256)
           handler: rewardAdded

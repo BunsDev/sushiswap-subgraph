@@ -28,11 +28,11 @@ export const LOCKUP_POOL_NUMBER = BigInt.fromI32(29)
 
 export const LOCKUP_BLOCK_NUMBER = BigInt.fromI32(10959148)
 
-export const MASTER_CHEF_START_BLOCK = BigInt.fromI32(10750000)
+export const MASTER_CHEF_START_BLOCK = BigInt.fromI32(15000000)
 
 export const UNISWAP_SOUL_ETH_PAIR_FIRST_LIQUDITY_BLOCK = BigInt.fromI32(10750005)
 
-export const ACC_SUSHI_PRECISION = BigInt.fromString('1000000000000')
+export const ACC_SOUL_PRECISION = BigInt.fromString('1000000000000')
 
 export const COFFINBOX_DEPOSIT = 'deposit'
 
@@ -64,11 +64,11 @@ export const MASTER_CHEF_ADDRESS = Address.fromString(
 
 export const MASTER_CHEF_V2_ADDRESS = Address.fromString('0xef0881ec094552b2e128cf945ef17a6752b4ec5d')
 
-export const SUSHI_BAR_ADDRESS = Address.fromString(
+export const SOUL_BAR_ADDRESS = Address.fromString(
   '{{ sushi_bar_address }}{{^sushi_bar_address}}0x0000000000000000000000000000000000000000{{/sushi_bar_address}}'
 )
 
-export const SUSHI_MAKER_ADDRESS = Address.fromString(
+export const SOUL_MAKER_ADDRESS = Address.fromString(
   '{{ sushi_maker_address }}{{^sushi_maker_address}}0x0000000000000000000000000000000000000000{{/sushi_maker_address}}'
 )
 
@@ -76,20 +76,20 @@ export const SOUL_TOKEN_ADDRESS = Address.fromString(
   '{{ soul_address }}{{^soul_address}}0x0000000000000000000000000000000000000000{{/soul_address}}'
 )
 
-export const SUSHI_USDT_PAIR_ADDRESS = Address.fromString(
-  '{{ sushi_usdt_pair_address }}{{^sushi_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/sushi_usdt_pair_address}}'
+export const SOUL_USDT_PAIR_ADDRESS = Address.fromString(
+  '{{ soul_usdt_pair_address }}{{^soul_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/soul_usdt_pair_address}}'
 )
 
-export const XSUSHI_USDC_PAIR_ADDRESS = Address.fromString(
-  '{{ xsushi_usdc_pair_address }}{{^xsushi_usdc_pair_address}}0x0000000000000000000000000000000000000000{{/xsushi_usdc_pair_address}}'
+export const SEANCE_USDC_PAIR_ADDRESS = Address.fromString(
+  '{{ seance_usdc_pair_address }}{{^seance_usdc_pair_address}}0x0000000000000000000000000000000000000000{{/seance_usdc_pair_address}}'
 )
 
-export const XSUSHI_WETH_PAIR_ADDRESS = Address.fromString(
-  '{{ xsushi_weth_pair_address }}{{^xsushi_weth_pair_address}}0x0000000000000000000000000000000000000000{{/xsushi_weth_pair_address}}'
+export const SEANCE_WETH_PAIR_ADDRESS = Address.fromString(
+  '{{ seance_weth_pair_address }}{{^seance_weth_pair_address}}0x0000000000000000000000000000000000000000{{/seance_weth_pair_address}}'
 )
 
 export const SOUL_DISTRIBUTOR_ADDRESS = Address.fromString(
-  '{{ sushi_distributor_address }}{{^sushi_distributor_address}}0x0000000000000000000000000000000000000000{{/sushi_distributor_address}}'
+  '{{ soul_distributor_address }}{{^soul_distributor_address}}0x0000000000000000000000000000000000000000{{/soul_distributor_address}}'
 )
 
 export const USDC_WETH_PAIR =
@@ -101,8 +101,8 @@ export const DAI_WETH_PAIR =
 export const USDT_WETH_PAIR =
   '{{ usdt_weth_pair }}{{^usdt_weth_pair}}0x0000000000000000000000000000000000000000{{/usdt_weth_pair}}'
 
-export const SUSHI_USDT_PAIR =
-  '{{ sushi_usdt_pair }}{{^sushi_usdt_pair}}0x0000000000000000000000000000000000000000{{/sushi_usdt_pair}}'
+export const SOUL_USDT_PAIR =
+  '{{ soul_usdt_pair }}{{^soul_usdt_pair}}0x0000000000000000000000000000000000000000{{/soul_usdt_pair}}'
 
 // minimum liquidity required to count towards tracked volume for pairs with small # of Lps
 export const MINIMUM_USD_THRESHOLD_NEW_PAIRS = BigDecimal.fromString(
@@ -116,8 +116,8 @@ export const WETH_ADDRESS = Address.fromString(
   '{{ weth_address }}{{^weth_address}}0x0000000000000000000000000000000000000000{{/weth_address}}'
 )
 
-export const SUSHISWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString(
-  '{{ sushiswap_weth_usdt_pair_address }}{{^sushiswap_weth_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/sushiswap_weth_usdt_pair_address}}'
+export const SOULSWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString(
+  '{{ soulswap_weth_usdt_pair_address }}{{^soulswap_weth_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/soulswap_weth_usdt_pair_address}}'
 )
 
 export const USDT_ADDRESS = Address.fromString(
@@ -132,12 +132,12 @@ export const UNISWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString(
   '{{ uniswap_weth_usdt_pair_address }}{{^uniswap_weth_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/uniswap_weth_usdt_pair_address}}'
 )
 
-export const UNISWAP_SUSHI_ETH_PAIR_ADDRESS = Address.fromString(
+export const UNISWAP_SOUL_ETH_PAIR_ADDRESS = Address.fromString(
   '{{ uniswap_sushi_eth_pair_address }}{{^uniswap_sushi_eth_pair_address}}0x0000000000000000000000000000000000000000{{/uniswap_sushi_eth_pair_address}}'
 )
 
-export const UNISWAP_SUSHI_USDT_PAIR_ADDRESS = Address.fromString(
-  '{{ uniswap_sushi_usdt_pair_address }}{{^uniswap_sushi_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/uniswap_sushi_usdt_pair_address}}'
+export const UNISWAP_SOUL_USDT_PAIR_ADDRESS = Address.fromString(
+  '{{ uniswap_soul_usdt_pair_address }}{{^uniswap_soul_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/uniswap_soul_usdt_pair_address}}'
 )
 
 // Coffinbox constants
@@ -147,11 +147,6 @@ export const COFFINBOX_ADDRESS = Address.fromString(
 
 export const UNDERWORLD_PAIR_MEDIUM_RISK_MASTER_ADDRESS = Address.fromString(
   '{{ underworld_pair_medium_risk_master_address }}{{^underworld_pair_medium_risk_master_address}}0x0000000000000000000000000000000000000000{{/underworld_pair_medium_risk_master_address}}'
-)
-
-// MiniChef
-export const MINI_CHEF_ADDRESS = Address.fromString(
-  '{{ minichef_address }}{{^minichef_address}}0x0000000000000000000000000000000000000000{{/minichef_address}}'
 )
 
 export const COMPLEX_REWARDER = Address.fromString(
