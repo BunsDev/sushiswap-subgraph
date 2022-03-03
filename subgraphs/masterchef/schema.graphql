@@ -15,9 +15,6 @@ type MasterChef @entity {
   # Start Time
   startTime: BigInt!
 
-  # Start Block
-  startBlock: BigInt!
-
   # Soul
   soul: Bytes!
 

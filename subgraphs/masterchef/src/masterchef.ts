@@ -242,20 +242,20 @@ export function updatePool(call: UpdatePoolCall): void {
 
 // Events
 export function deposit(event: Deposit): void {
-  // if (event.params.amount == BIG_INT_ZERO) {
-  //   log.info('Deposit zero transaction, input {} hash {}', [
-  //     event.transaction.input.toHex(),
-  //     event.transaction.hash.toHex(),
-  //   ])
-  // }
+  if (event.params.amount == BIG_INT_ZERO) {
+    log.info('Deposit zero transaction, input {} hash {}', [
+      event.transaction.input.toHex(),
+      event.transaction.hash.toHex(),
+    ])
+  }
 
   const amount = event.params.amount.divDecimal(BIG_DECIMAL_1E18)
 
-  /*log.info('{} has deposited {} slp tokens to pool #{}', [
+  log.info('{} has deposited {} slp tokens to pool #{}', [
     event.params.user.toHex(),
     event.params.amount.toString(),
     event.params.pid.toString(),
-  ])*/
+  ])
 
   const masterChefContract = MasterChefContract.bind(MASTER_CHEF_ADDRESS)
 
@@ -297,9 +297,9 @@ export function deposit(event: Deposit): void {
       .div(BIG_DECIMAL_1E12)
       .minus(user.rewardDebt.toBigDecimal())
       .div(BIG_DECIMAL_1E18)
-    // log.info('Deposit: User amount is more than zero, we should harvest {} soul', [pending.toString()])
+    log.info('Deposit: User amount is more than zero, we should harvest {} soul', [pending.toString()])
     if (pending.gt(BIG_DECIMAL_ZERO)) {
-      // log.info('Harvesting {} SOUL', [pending.toString()])
+      log.info('Harvesting {} SOUL', [pending.toString()])
       const soulHarvestedUSD = pending.times(getSoulPrice(event.block))
       user.soulHarvested = user.soulHarvested.plus(pending)
       user.soulHarvestedUSD = user.soulHarvestedUSD.plus(soulHarvestedUSD)
@@ -324,8 +324,10 @@ export function deposit(event: Deposit): void {
 
       const token1Amount = reservesResult.value.value1.toBigDecimal().times(share)
 
+      const token0 = pairContract.token0()
       const token0PriceUSD = getUSDRate(pairContract.token0(), event.block)
 
+      const token1 = pairContract.token1()
       const token1PriceUSD = getUSDRate(pairContract.token1(), event.block)
 
       const token0USD = token0Amount.times(token0PriceUSD)
@@ -334,34 +336,34 @@ export function deposit(event: Deposit): void {
 
       const entryUSD = token0USD.plus(token1USD)
 
-      // log.info(
-      //   'Token {} priceUSD: {} reserve: {} amount: {} / Token {} priceUSD: {} reserve: {} amount: {} - slp amount: {} total supply: {} share: {}',
-      //   [
-      //     token0.symbol(),
-      //     token0PriceUSD.toString(),
-      //     reservesResult.value.value0.toString(),
-      //     token0Amount.toString(),
-      //     token1.symbol(),
-      //     token1PriceUSD.toString(),
-      //     reservesResult.value.value1.toString(),
-      //     token1Amount.toString(),
-      //     amount.toString(),
-      //     totalSupply.toString(),
-      //     share.toString(),
-      //   ]
-      // )
+      log.info(
+        'Token {} priceUSD: {} reserve: {} amount: {} / Token {} priceUSD: {} reserve: {} amount: {} - slp amount: {} total supply: {} share: {}',
+        [
+          token0.toString(),
+          token0PriceUSD.toString(),
+          reservesResult.value.value0.toString(),
+          token0Amount.toString(),
+          token1.toString(),
+          token1PriceUSD.toString(),
+          reservesResult.value.value1.toString(),
+          token1Amount.toString(),
+          amount.toString(),
+          totalSupply.toString(),
+          share.toString(),
+        ]
+      )
 
-      // log.info('User {} has deposited {} SLP tokens {} {} (${}) and {} {} (${}) at a combined value of ${}', [
-      //   user.address.toHex(),
-      //   amount.toString(),
-      //   token0Amount.toString(),
-      //   token0.symbol(),
-      //   token0USD.toString(),
-      //   token1Amount.toString(),
-      //   token1.symbol(),
-      //   token1USD.toString(),
-      //   entryUSD.toString(),
-      // ])
+      log.info('User {} has deposited {} SLP tokens {} {} (${}) and {} {} (${}) at a combined value of ${}', [
+        user.address.toHex(),
+        amount.toString(),
+        token0Amount.toString(),
+        token0.toString(),
+        token0USD.toString(),
+        token1Amount.toString(),
+        token1.toString(),
+        token1USD.toString(),
+        entryUSD.toString(),
+      ])
 
       user.entryUSD = user.entryUSD.plus(entryUSD)
 
@@ -399,20 +401,20 @@ export function deposit(event: Deposit): void {
 }
 
 export function withdraw(event: Withdraw): void {
-  // if (event.params.amount == BIG_INT_ZERO && User.load(event.params.user.toHex()) !== null) {
-  //   log.info('Withdrawal zero transaction, input {} hash {}', [
-  //     event.transaction.input.toHex(),
-  //     event.transaction.hash.toHex(),
-  //   ])
-  // }
+  if (event.params.amount == BIG_INT_ZERO && User.load(event.params.user.toHex()) !== null) {
+    log.info('Withdrawal zero transaction, input {} hash {}', [
+      event.transaction.input.toHex(),
+      event.transaction.hash.toHex(),
+    ])
+  }
 
   const amount = event.params.amount.divDecimal(BIG_DECIMAL_1E18)
 
-  // log.info('{} has withdrawn {} slp tokens from pool #{}', [
-  //   event.params.user.toHex(),
-  //   amount.toString(),
-  //   event.params.pid.toString(),
-  // ])
+  log.info('{} has withdrawn {} slp tokens from pool #{}', [
+    event.params.user.toHex(),
+    amount.toString(),
+    event.params.pid.toString(),
+  ])
 
   const masterChefContract = MasterChefContract.bind(MASTER_CHEF_ADDRESS)
 
@@ -445,16 +447,16 @@ export function withdraw(event: Withdraw): void {
       .div(BIG_DECIMAL_1E12)
       .minus(user.rewardDebt.toBigDecimal())
       .div(BIG_DECIMAL_1E18)
-    // log.info('Withdraw: User amount is more than zero, we should harvest {} soul - block: {}', [
-    //   pending.toString(),
-    //   event.block.number.toString(),
-    // ])
-    // log.info('SOUL PRICE {}', [getSoulPrice(event.block).toString()])
+    log.info('Withdraw: User amount is more than zero, we should harvest {} soul - block: {}', [
+      pending.toString(),
+      event.block.number.toString(),
+    ])
+    log.info('SOUL PRICE {}', [getSoulPrice(event.block).toString()])
     if (pending.gt(BIG_DECIMAL_ZERO)) {
-      // log.info('Harvesting {} SOUL (CURRENT SOUL PRICE {})', [
-      //   pending.toString(),
-      //   getSoulPrice(event.block).toString(),
-      // ])
+      log.info('Harvesting {} SOUL (CURRENT SOUL PRICE {})', [
+        pending.toString(),
+        getSoulPrice(event.block).toString(),
+      ])
       const soulHarvestedUSD = pending.times(getSoulPrice(event.block))
       user.soulHarvested = user.soulHarvested.plus(pending)
       user.soulHarvestedUSD = user.soulHarvestedUSD.plus(soulHarvestedUSD)
@@ -496,17 +498,17 @@ export function withdraw(event: Withdraw): void {
 
       poolHistory.exitUSD = pool.exitUSD
 
-      // log.info('User {} has withdrwn {} SLP tokens {} {} (${}) and {} {} (${}) at a combined value of ${}', [
-      //   user.address.toHex(),
-      //   amount.toString(),
-      //   token0Amount.toString(),
-      //   token0USD.toString(),
-      //   pairContract.token0().toHex(),
-      //   token1Amount.toString(),
-      //   token1USD.toString(),
-      //   pairContract.token1().toHex(),
-      //   exitUSD.toString(),
-      // ])
+      log.info('User {} has withdrwn {} SLP tokens {} {} (${}) and {} {} (${}) at a combined value of ${}', [
+        user.address.toHex(),
+        amount.toString(),
+        token0Amount.toString(),
+        token0USD.toString(),
+        pairContract.token0().toHex(),
+        token1Amount.toString(),
+        token1USD.toString(),
+        pairContract.token1().toHex(),
+        exitUSD.toString(),
+      ])
 
       user.exitUSD = user.exitUSD.plus(exitUSD)
     } else {

@@ -1,11 +1,8 @@
 import {
   Deposit,
   Withdraw,
-  EmergencyWithdraw,
-  Harvest,
-  LogPoolAddition,
-  LogSetPool,
-  LogUpdatePool
+  PoolAdded,
+  PoolSet,
 } from '../../generated/MasterChefV2/MasterChefV2'
 
 import { Address, BigDecimal, BigInt, dataSource, ethereum, log } from '@graphprotocol/graph-ts'
@@ -19,32 +16,27 @@ import {
   MASTER_CHEF_V2_ADDRESS,
   ACC_SOUL_PRECISION
 } from 'const'
-import { MasterChef, Pool, User, Rewarder } from '../../generated/schema'
+import { MasterChef, Pool, User } from '../../generated/schema'
 
 import {
   getMasterChef,
   getPool,
-  getRewarder,
   getUser,
-  updateRewarder
 } from '../entities'
 
 import { ERC20 as ERC20Contract } from '../../generated/MasterChefV2/ERC20'
 
-export function logPoolAddition(event: LogPoolAddition): void {
+export function logPoolAddition(event: PoolAdded): void {
   log.info('[MasterChefV2] Log Pool Addition {} {} {} {}', [
     event.params.pid.toString(),
     event.params.allocPoint.toString(),
-    event.params.lpToken.toHex(),
-    event.params.rewarder.toHex()
+    event.params.lpToken.toHex()
   ])
 
   const masterChef = getMasterChef(event.block)
   const pool = getPool(event.params.pid, event.block)
-  const rewarder = getRewarder(event.params.rewarder, event.block)
 
   pool.pair = event.params.lpToken
-  pool.rewarder = rewarder.id
   pool.allocPoint = event.params.allocPoint
   pool.save()
 
@@ -53,21 +45,14 @@ export function logPoolAddition(event: LogPoolAddition): void {
   masterChef.save()
 }
 
-export function logSetPool(event: LogSetPool): void {
+export function logSetPool(event: PoolSet): void {
   log.info('[MasterChefV2] Log Set Pool {} {} {} {}', [
     event.params.pid.toString(),
-    event.params.allocPoint.toString(),
-    event.params.rewarder.toHex(),
-    event.params.overwrite == true ? 'true' : 'false'
+    event.params.allocPoint.toString()
   ])
 
   const masterChef = getMasterChef(event.block)
   const pool = getPool(event.params.pid, event.block)
-
-  if (event.params.overwrite == true) {
-     const rewarder = getRewarder(event.params.rewarder, event.block)
-     pool.rewarder = rewarder.id
-  }
 
   masterChef.totalAllocPoint = masterChef.totalAllocPoint.plus(event.params.allocPoint.minus(pool.allocPoint))
   masterChef.save()
@@ -76,20 +61,18 @@ export function logSetPool(event: LogSetPool): void {
   pool.save()
 }
 
-export function logUpdatePool(event: LogUpdatePool): void {
+export function logUpdatePool(event: PoolSet): void {
   log.info('[MasterChefV2] Log Update Pool {} {} {} {}', [
     event.params.pid.toString(),
-    event.params.lastRewardTime.toString(),
-    event.params.lpSupply.toString(),
-    event.params.accSoulPerShare.toString()
+    // event.params.lastRewardTime.toString(),
+    // event.params.lpSupply.toString(),
+    // event.params.accSoulPerShare.toString()
   ])
 
   const masterChef = getMasterChef(event.block)
   const pool = getPool(event.params.pid, event.block)
-  updateRewarder(Address.fromString(pool.rewarder))
-
-  pool.accSoulPerShare = event.params.accSoulPerShare
-  pool.lastRewardTime = event.params.lastRewardTime
+  // pool.accSoulPerShare = event.params.accSoulPerShare
+  // pool.lastRewardTime = event.params.lastRewardTime
   pool.save()
 }
 
@@ -97,13 +80,12 @@ export function deposit(event: Deposit): void {
   log.info('[MasterChefV2] Log Deposit {} {} {} {}', [
     event.params.user.toHex(),
     event.params.pid.toString(),
-    event.params.amount.toString(),
-    event.params.to.toHex()
+    event.params.amount.toString()
   ])
 
   const masterChef = getMasterChef(event.block)
   const pool = getPool(event.params.pid, event.block)
-  const user = getUser(event.params.to, event.params.pid, event.block)
+  const user = getUser(event.address, event.params.pid, event.block)
 
   pool.slpBalance = pool.slpBalance.plus(event.params.amount)
   pool.save()
@@ -117,8 +99,7 @@ export function withdraw(event: Withdraw): void {
   log.info('[MasterChefV2] Log Withdraw {} {} {} {}', [
     event.params.user.toHex(),
     event.params.pid.toString(),
-    event.params.amount.toString(),
-    event.params.to.toHex()
+    event.params.amount.toString()
   ])
 
   const masterChef = getMasterChef(event.block)
@@ -133,36 +114,20 @@ export function withdraw(event: Withdraw): void {
   user.save()
 }
 
-export function emergencyWithdraw(event: EmergencyWithdraw): void {
-  log.info('[MasterChefV2] Log Emergency Withdraw {} {} {} {}', [
-    event.params.user.toHex(),
-    event.params.pid.toString(),
-    event.params.amount.toString(),
-    event.params.to.toHex()
-  ])
+// export function harvest(event: Harvest): void {
+//   log.info('[MasterChefV2] Log Withdraw {} {} {}', [
+//     event.params.user.toHex(),
+//     event.params.pid.toString(),
+//     event.params.amount.toString()
+//   ])
 
-  const masterChefV2 = getMasterChef(event.block)
-  const user = getUser(event.params.user, event.params.pid, event.block)
+//   const masterChef = getMasterChef(event.block)
+//   const pool = getPool(event.params.pid, event.block)
+//   const user = getUser(event.params.user, event.params.pid, event.block)
 
-  user.amount = BIG_INT_ZERO
-  user.rewardDebt = BIG_INT_ZERO
-  user.save()
-}
+//   let accumulatedSoul = user.amount.times(pool.accSoulPerShare).div(ACC_SOUL_PRECISION)
 
-export function harvest(event: Harvest): void {
-  log.info('[MasterChefV2] Log Withdraw {} {} {}', [
-    event.params.user.toHex(),
-    event.params.pid.toString(),
-    event.params.amount.toString()
-  ])
-
-  const masterChef = getMasterChef(event.block)
-  const pool = getPool(event.params.pid, event.block)
-  const user = getUser(event.params.user, event.params.pid, event.block)
-
-  let accumulatedSoul = user.amount.times(pool.accSoulPerShare).div(ACC_SOUL_PRECISION)
-
-  user.rewardDebt = accumulatedSoul
-  user.soulHarvested = user.soulHarvested.plus(event.params.amount)
-  user.save()
-}
+//   user.rewardDebt = accumulatedSoul
+//   user.soulHarvested = user.soulHarvested.plus(event.params.amount)
+//   user.save()
+// }
