@@ -36,7 +36,7 @@ dataSources:
           handler: withdraw
       callHandlers:
         - function: addPool(uint256,address,bool)
-          handler: add
+          handler: addPool
         - function: set(uint256,uint256,bool)
           handler: set
         - function: massUpdatePools()

@@ -114,20 +114,20 @@ export function withdraw(event: Withdraw): void {
   user.save()
 }
 
-// export function harvest(event: Harvest): void {
-//   log.info('[MasterChefV2] Log Withdraw {} {} {}', [
-//     event.params.user.toHex(),
-//     event.params.pid.toString(),
-//     event.params.amount.toString()
-//   ])
+export function harvest(event: Deposit): void {
+  log.info('[MasterChefV2] Log Withdraw {} {} {}', [
+    event.params.user.toHex(),
+    event.params.pid.toString(),
+    event.params.amount.toString()
+  ])
 
-//   const masterChef = getMasterChef(event.block)
-//   const pool = getPool(event.params.pid, event.block)
-//   const user = getUser(event.params.user, event.params.pid, event.block)
+  const masterChef = getMasterChef(event.block)
+  const pool = getPool(event.params.pid, event.block)
+  const user = getUser(event.params.user, event.params.pid, event.block)
 
-//   let accumulatedSoul = user.amount.times(pool.accSoulPerShare).div(ACC_SOUL_PRECISION)
+  let accumulatedSoul = user.amount.times(pool.accSoulPerShare).div(ACC_SOUL_PRECISION)
 
-//   user.rewardDebt = accumulatedSoul
-//   user.soulHarvested = user.soulHarvested.plus(event.params.amount)
-//   user.save()
-// }
+  user.rewardDebt = accumulatedSoul
+  user.soulHarvested = user.soulHarvested.plus(event.params.amount)
+  user.save()
+}
