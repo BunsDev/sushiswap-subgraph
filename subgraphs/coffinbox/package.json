@@ -13,7 +13,7 @@
     "remove-local": "graph remove --node http://localhost:8020/ /SoulSwapFinance/coffinbox",
 
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 /SoulSwapFinance/coffinbox",
-    "deploy:fantom": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ SoulSwapFinance/coffinbox subgraph.yaml",
+    "deploy:fantom": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ SoulSwapFinance/fantom-coffinbox subgraph.yaml",
   
     "prepare:fantom": "mustache config/fantom.json template.yaml > subgraph.yaml"
   }
