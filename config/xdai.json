@@ -1,8 +1,8 @@
 {
   "network": "xdai",
   "factory_address": "0xc35dadb65012ec5796536bd9864ed8773abc74c4",
-  "usdc_weth_pair": "0xa227c72a4055a9dc949cae24f54535fe890d3663",
-  "usdt_weth_pair": "0x6685c047eab042297e659bfaa7423e94b4a14b9e",
+  "usdc_native_pair": "0xa227c72a4055a9dc949cae24f54535fe890d3663",
+  "usdt_native_pair": "0x6685c047eab042297e659bfaa7423e94b4a14b9e",
   "sushiswap_weth_usdt_pair_address": "0x6685c047eab042297e659bfaa7423e94b4a14b9e",
   "coffinbox_address": "0xf5bce5077908a1b7370b9ae04adc565ebd643966",
   "underworld_pair_medium_risk_master_address": "0x2cba6ab6574646badc84f0544d05059e57a5dc42",

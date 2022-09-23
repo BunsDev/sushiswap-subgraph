@@ -8,7 +8,7 @@
   "scripts": {
     "build": "yarn workspaces run build",
     "codegen": "yarn workspaces run codegen",
-    "prepare:fantom": "yarn workspaces run prepare:fantom"
+    "prepare:avalanche": "yarn workspaces run prepare:avalanche"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.21.1",

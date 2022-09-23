@@ -72,8 +72,8 @@ export const SOUL_TOKEN_ADDRESS = Address.fromString(
   '{{ soul_address }}{{^soul_address}}0x0000000000000000000000000000000000000000{{/soul_address}}'
 )
 
-export const SOUL_USDT_PAIR_ADDRESS = Address.fromString(
-  '{{ soul_usdt_pair_address }}{{^soul_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/soul_usdt_pair_address}}'
+export const SOUL_USDC_PAIR_ADDRESS = Address.fromString(
+  '{{ soul_usdc_pair_address }}{{^soul_usdc_pair_address}}0x0000000000000000000000000000000000000000{{/soul_usdc_pair_address}}'
 )
 
 export const SEANCE_USDC_PAIR_ADDRESS = Address.fromString(
@@ -88,17 +88,17 @@ export const SOUL_DISTRIBUTOR_ADDRESS = Address.fromString(
   '{{ soul_distributor_address }}{{^soul_distributor_address}}0x0000000000000000000000000000000000000000{{/soul_distributor_address}}'
 )
 
-export const USDC_WETH_PAIR =
-  '{{ usdc_weth_pair }}{{^usdc_weth_pair}}0x0000000000000000000000000000000000000000{{/usdc_weth_pair}}'
+export const USDC_NATIVE_PAIR =
+  '{{ usdc_native_pair }}{{^usdc_native_pair}}0x0000000000000000000000000000000000000000{{/usdc_native_pair}}'
 
-export const DAI_WETH_PAIR =
-  '{{ dai_weth_pair }}{{^dai_weth_pair}}0x0000000000000000000000000000000000000000{{/dai_weth_pair}}'
+export const DAI_NATIVE_PAIR =
+  '{{ dai_native_pair }}{{^dai_native_pair}}0x0000000000000000000000000000000000000000{{/dai_native_pair}}'
 
-export const USDT_WETH_PAIR =
-  '{{ usdt_weth_pair }}{{^usdt_weth_pair}}0x0000000000000000000000000000000000000000{{/usdt_weth_pair}}'
+// export const USDT_NATIVE_PAIR =
+//   '{{ usdt_native_pair }}{{^usdt_native_pair}}0x0000000000000000000000000000000000000000{{/usdt_native_pair}}'
 
-export const SOUL_USDT_PAIR =
-  '{{ soul_usdt_pair }}{{^soul_usdt_pair}}0x0000000000000000000000000000000000000000{{/soul_usdt_pair}}'
+export const SOUL_USDC_PAIR =
+  '{{ soul_usdc_pair }}{{^soul_usdc_pair}}0x0000000000000000000000000000000000000000{{/soul_usdc_pair}}'
 
 // minimum liquidity required to count towards tracked volume for pairs with small # of Lps
 export const MINIMUM_USD_THRESHOLD_NEW_PAIRS = BigDecimal.fromString(
@@ -132,8 +132,8 @@ export const UNISWAP_SOUL_ETH_PAIR_ADDRESS = Address.fromString(
   '{{ uniswap_sushi_eth_pair_address }}{{^uniswap_sushi_eth_pair_address}}0x0000000000000000000000000000000000000000{{/uniswap_sushi_eth_pair_address}}'
 )
 
-export const UNISWAP_SOUL_USDT_PAIR_ADDRESS = Address.fromString(
-  '{{ uniswap_soul_usdt_pair_address }}{{^uniswap_soul_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/uniswap_soul_usdt_pair_address}}'
+export const UNISWAP_SOUL_USDC_PAIR_ADDRESS = Address.fromString(
+  '{{ uniswap_soul_usdc_pair_address }}{{^uniswap_soul_usdc_pair_address}}0x0000000000000000000000000000000000000000{{/uniswap_soul_usdc_pair_address}}'
 )
 
 // Coffinbox constants

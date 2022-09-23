@@ -7,7 +7,7 @@ import {
   BIG_INT_ZERO,
   SOUL_BAR_ADDRESS,
   SOUL_TOKEN_ADDRESS,
-  SOUL_USDT_PAIR_ADDRESS,
+  SOUL_USDC_PAIR_ADDRESS,
 } from 'const'
 import { Address, BigDecimal, BigInt, dataSource, ethereum, log } from '@graphprotocol/graph-ts'
 import { AuctionTemplateAdded, AuctionTemplateRemoved, MarketCreated } from '../generated/MISOMarket/MISOMarket'

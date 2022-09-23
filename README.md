@@ -7,7 +7,7 @@ The Graph exposes a GraphQL endpoint to query the events and entities within the
 Current subgraph locations:
 
 1. **Exchange**: Includes all SoulSwap Exchange data with Price Data, Volume, Users, etc:
-   + https://thegraph.com/explorer/subgraph/soulswapfinance/fantom-exchange (fantom)
+   + https://thegraph.com/explorer/subgraph/soulswapfinance/avalanche-exchange (avalanche)
 
 2. **Master Chef**: Indexes all MasterChef staking data: https://thegraph.com/explorer/subgraph/soulswapfinance/master-chef
 
