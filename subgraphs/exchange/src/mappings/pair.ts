@@ -1,10 +1,10 @@
-import { ADDRESS_ZERO, BIG_DECIMAL_ZERO, MASTER_CHEF_ADDRESS, MINIMUM_USD_THRESHOLD_NEW_PAIRS, WHITELIST } from 'const'
+import { ADDRESS_ZERO, BIG_DECIMAL_ZERO, MINIMUM_USD_THRESHOLD_NEW_PAIRS, WHITELIST } from 'const'
 import { Address, BigDecimal, BigInt, dataSource, log, store } from '@graphprotocol/graph-ts'
 import { Burn, Mint, Pair, Swap, Token, Transaction } from '../../generated/schema'
 import {
   Burn as BurnEvent,
   Mint as MintEvent,
-  Pair as PairContract,
+  // Pair as PairContract,
   Swap as SwapEvent,
   Sync as SyncEvent,
   Transfer as TransferEvent,
@@ -21,7 +21,7 @@ import {
   updatePairDayData,
   updatePairHourData,
   updateTokenDayData,
-} from '../enitites'
+} from '../entities'
 import { findEthPerToken, getEthPrice } from '../pricing'
 
 const BLACKLIST_EXCHANGE_VOLUME: string[] = [

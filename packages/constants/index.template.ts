@@ -68,10 +68,6 @@ export const SOUL_BAR_ADDRESS = Address.fromString(
   '{{ sushi_bar_address }}{{^sushi_bar_address}}0x0000000000000000000000000000000000000000{{/sushi_bar_address}}'
 )
 
-export const SOUL_MAKER_ADDRESS = Address.fromString(
-  '{{ sushi_maker_address }}{{^sushi_maker_address}}0x0000000000000000000000000000000000000000{{/sushi_maker_address}}'
-)
-
 export const SOUL_TOKEN_ADDRESS = Address.fromString(
   '{{ soul_address }}{{^soul_address}}0x0000000000000000000000000000000000000000{{/soul_address}}'
 )
@@ -173,21 +169,5 @@ export const USDT = '{{ usdt_address }}{{^usdt_address}}0x0000000000000000000000
 export const DAI = '{{ dai_address }}{{^dai_address}}0x0000000000000000000000000000000000000000{{/dai_address}}'
 
 export const WHITELIST: string[] = '{{ whitelist }}'.split(',')
-
-// export const WHITELIST: string[] = [
-//   "0xcf664087a5bb0237a0bad6742852ec6c8d69a27a",
-//   "0x6983d1e6def3690c4d616b13597a09e6193ea013",
-//   "0x3095c7557bcb296ccc6e363de01b760ba031f2d9",
-//   "0x985458e523db3d53125813ed68c274899e9dfab4",
-//   "0x3c2b8be99c50593081eaa2a724f0b8285f5aba8f",
-//   "0xe176ebe47d621b984a73036b9da5d834411ef734",
-// ]
-
-// export const WHITELIST: string[] = [
-//   "0x471ece3750da237f93b8e339c536989b8978a438",
-//   "0xd629eb00deced2a080b7ec630ef6ac117e614f1b",
-//   "0x765de816845861e75a25fca122bb6898b8b1282a",
-//   "0xd8763cba276a3738e6de85b4b3bf5fded6d6ca73"
-// ];
 
 const CUSTOM_BASES = new Map<string, string>()
