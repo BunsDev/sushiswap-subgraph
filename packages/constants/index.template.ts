@@ -39,10 +39,6 @@ export const FACTORY_ADDRESS = Address.fromString(
   '{{ factory_address }}{{^factory_address}}0x0000000000000000000000000000000000000000{{/factory_address}}'
 )
 
-export const SOUL_BAR_ADDRESS = Address.fromString(
-  '{{ sushi_bar_address }}{{^sushi_bar_address}}0x0000000000000000000000000000000000000000{{/sushi_bar_address}}'
-)
-
 export const SOUL_TOKEN_ADDRESS = Address.fromString(
   '{{ soul_address }}{{^soul_address}}0x0000000000000000000000000000000000000000{{/soul_address}}'
 )
@@ -81,27 +77,11 @@ export const WBTC_ADDRESS = Address.fromString(
 )
 
 export const SOULSWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString(
-  '{{ soulswap_weth_usdt_pair_address }}{{^soulswap_weth_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/soulswap_weth_usdt_pair_address}}'
+  '{{ weth_usdt_pair_address }}{{^weth_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/weth_usdt_pair_address}}'
 )
 
 export const USDT_ADDRESS = Address.fromString(
   '{{ usdt_address }}{{^usdt_address}}0x0000000000000000000000000000000000000000{{/usdt_address}}'
-)
-
-export const UNISWAP_FACTORY_ADDRESS = Address.fromString(
-  '{{ uniswap_factory_address }}{{^uniswap_factory_address}}0x0000000000000000000000000000000000000000{{/uniswap_factory_address}}'
-)
-
-export const UNISWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString(
-  '{{ uniswap_weth_usdt_pair_address }}{{^uniswap_weth_usdt_pair_address}}0x0000000000000000000000000000000000000000{{/uniswap_weth_usdt_pair_address}}'
-)
-
-export const UNISWAP_SOUL_ETH_PAIR_ADDRESS = Address.fromString(
-  '{{ uniswap_sushi_eth_pair_address }}{{^uniswap_sushi_eth_pair_address}}0x0000000000000000000000000000000000000000{{/uniswap_sushi_eth_pair_address}}'
-)
-
-export const UNISWAP_SOUL_USDC_PAIR_ADDRESS = Address.fromString(
-  '{{ uniswap_soul_usdc_pair_address }}{{^uniswap_soul_usdc_pair_address}}0x0000000000000000000000000000000000000000{{/uniswap_soul_usdc_pair_address}}'
 )
 
 // Coffinbox constants
@@ -112,19 +92,6 @@ export const COFFINBOX_ADDRESS = Address.fromString(
 export const UNDERWORLD_PAIR_MEDIUM_RISK_MASTER_ADDRESS = Address.fromString(
   '{{ underworld_pair_medium_risk_master_address }}{{^underworld_pair_medium_risk_master_address}}0x0000000000000000000000000000000000000000{{/underworld_pair_medium_risk_master_address}}'
 )
-
-export const COMPLEX_REWARDER = Address.fromString(
-  '{{ complex_rewarder_address }}{{^complex_rewarder_address}}0x0000000000000000000000000000000000000000{{/complex_rewarder_address}}'
-)
-
-export const CONVEX_REWARDERS: Array<Address> = [
-  Address.fromString('0x9e01aac4b3e8781a85b21d9d9f848e72af77b362'),
-  Address.fromString('0x1fd97b5e5a257b0b9b9a42a96bb8870cbdd1eb79'),
-]
-
-export const ALCX_REWARDER = Address.fromString('0x7519c93fc5073e15d89131fd38118d73a72370f8')
-
-export const LIDO_REWARDER = Address.fromString('0x75ff3dd673ef9fc459a52e1054db5df2a1101212')
 
 export const NATIVE = Address.fromString(
   '{{ native_address }}{{^native_address}}0x0000000000000000000000000000000000000000{{/native_address}}'

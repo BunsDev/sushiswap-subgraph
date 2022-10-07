@@ -1,6 +1,6 @@
 specVersion: 0.0.3
 description: CoffinBox
-repository: https://github.com/sushiswap/sushiswap-subgraph
+repository: https://github.com/soulswapfinance/soulswap-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
@@ -37,7 +37,7 @@ dataSources:
         - name: UnderworldPair
           file: ./packages/abis/UnderworldPair.json
         - name: ERC20
-          file: ../../node_modules/@sushiswap/core/build/abi/ERC20.json
+          file: ../../packages/abis/ERC20.json
         - name: ERC20SymbolBytes
           file: ../../packages/abis/ERC20SymbolBytes.json
         - name: ERC20NameBytes
