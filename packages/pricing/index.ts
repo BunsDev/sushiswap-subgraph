@@ -5,7 +5,7 @@ import {
   BIG_DECIMAL_ONE,
   BIG_DECIMAL_ZERO,
   FACTORY_ADDRESS,
-  WETH_USDT_PAIR_ADDRESS,
+  WETH_USDC_PAIR_ADDRESS,
   SOUL_USDC_PAIR_ADDRESS,
   USDT_ADDRESS,
   WETH_ADDRESS,
@@ -19,7 +19,7 @@ export function getUSDRate(token: Address, block: ethereum.Block): BigDecimal {
   const usdt = BIG_DECIMAL_ONE
 
   if (token != USDT_ADDRESS) {
-    const address = WETH_USDT_PAIR_ADDRESS
+    const address = WETH_USDC_PAIR_ADDRESS
     const tokenPriceETH = getEthRate(token, block)
     const pair = PairContract.bind(address)
     const reserves = pair.getReserves()

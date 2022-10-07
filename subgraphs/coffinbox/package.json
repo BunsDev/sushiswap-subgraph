@@ -9,11 +9,11 @@
   "scripts": {
     "codegen": "graph codegen subgraph.yaml",
     "build": "graph build subgraph.yaml",
-    "create-local": "graph create --node http://localhost:8020/ /SoulSwapFinance/coffinbox-avalanche",
-    "remove-local": "graph remove --node http://localhost:8020/ /SoulSwapFinance/coffinbox-avalanche",
+    "create-local": "graph create --node http://localhost:8020/ /soulswapfinance/coffinbox-avalanche",
+    "remove-local": "graph remove --node http://localhost:8020/ /soulswapfinance/coffinbox-avalanche",
 
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 /SoulSwapFinance/coffinbox-avalanche",
-    "deploy:avalanche": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ SoulSwapFinance/coffinbox-avalanche subgraph.yaml",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 /soulswapfinance/coffinbox-avalanche",
+    "deploy:avalanche": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ soulswapfinance/coffinbox-avalanche subgraph.yaml",
   
     "prepare:avalanche": "mustache config/avalanche.json template.yaml > subgraph.yaml"
   }
