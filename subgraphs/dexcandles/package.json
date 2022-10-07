@@ -6,10 +6,10 @@
     "scripts": {
         "codegen": "graph codegen subgraph.yaml",
         "build": "graph build subgraph.yaml",
-        "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ sushiswap/dexcandles subgraph.yaml",
-        "create-local": "graph create --node http://localhost:8020/ /sushiswap/sushiswap",
-        "remove-local": "graph remove --node http://localhost:8020/ /sushiswap/sushiswap",
-        "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 /sushiswap/sushiswap",
-        "prepare:fantom": "mustache config/fantom.json template.yaml > subgraph.yaml"
+        "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ soulswap/dexcandles-avalanche subgraph.yaml",
+        "create-local": "graph create --node http://localhost:8020/ /soulswap/dexcandles-avalanche",
+        "remove-local": "graph remove --node http://localhost:8020/ /soulswap/dexcandles-avalanche",
+        "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 /soulswap/dexcandles-avalanche",
+        "prepare:avalanche": "mustache config/avalanche.json template.yaml > subgraph.yaml"
     }
 }

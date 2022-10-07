@@ -6,6 +6,7 @@
   "usdc_native_pair": "0x864384a54ea644852603778c0c200ef2d6f2ac2f",
   "dai_native_pair": "0xef1d48b24e87f8ccff97f7c295b31b92e30f372b",
   "weth_address": "0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab",
+  "wbtc_address": "0x50b7545627a5162f82a992c33b87adc75187b218",
   "native_address": "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
   "usdc_address": "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
   "dai_address": "0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
@@ -13,6 +14,7 @@
   "whitelist": [
     "0x11d6dd25c1695764e64f439e32cc7746f3945543",
     "0x49d5c2bdffac6ce2bfdb6640f4f80f226bc10bab",
+    "0x50b7545627a5162f82a992c33b87adc75187b218",
     "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
     "0xa7d7079b0fead91f3e65f86e8915cb59c1a4c664",
     "0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
@@ -23,5 +25,5 @@
     "startBlock": "17149268"
   },
   "minimum_usd_threshold_new_pairs": "10",
-  "minimum_liquidity_threshold_eth": "2"
+  "minimum_liquidity_threshold_eth": "1"
 }

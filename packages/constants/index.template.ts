@@ -1,37 +1,18 @@
 import { Address, BigDecimal, BigInt } from '@graphprotocol/graph-ts'
 
 export const NULL_CALL_RESULT_VALUE = '0x0000000000000000000000000000000000000000000000000000000000000001'
-
 export const ADDRESS_ZERO = Address.fromString('0x0000000000000000000000000000000000000000')
 
 export const BIG_DECIMAL_1E6 = BigDecimal.fromString('1e6')
-
 export const BIG_DECIMAL_1E12 = BigDecimal.fromString('1e12')
-
 export const BIG_DECIMAL_1E18 = BigDecimal.fromString('1e18')
-
 export const BIG_DECIMAL_ZERO = BigDecimal.fromString('0')
-
 export const BIG_DECIMAL_ONE = BigDecimal.fromString('1')
-
 export const BIG_INT_ONE = BigInt.fromI32(1)
-
 export const BIG_INT_TWO = BigInt.fromI32(2)
-
 export const BIG_INT_ONE_HUNDRED = BigInt.fromI32(100)
-
 export const BIG_INT_ONE_DAY_SECONDS = BigInt.fromI32(86400)
-
 export const BIG_INT_ZERO = BigInt.fromI32(0)
-
-export const LOCKUP_POOL_NUMBER = BigInt.fromI32(29)
-
-export const LOCKUP_BLOCK_NUMBER = BigInt.fromI32(10959148)
-
-export const MASTER_CHEF_START_BLOCK = BigInt.fromI32(15000000)
-
-export const UNISWAP_SOUL_ETH_PAIR_FIRST_LIQUDITY_BLOCK = BigInt.fromI32(10750005)
-
 export const ACC_SOUL_PRECISION = BigInt.fromString('1000000000000')
 
 export const COFFINBOX_DEPOSIT = 'deposit'
@@ -58,12 +39,6 @@ export const FACTORY_ADDRESS = Address.fromString(
   '{{ factory_address }}{{^factory_address}}0x0000000000000000000000000000000000000000{{/factory_address}}'
 )
 
-export const MASTER_CHEF_ADDRESS = Address.fromString(
-  '{{ masterchef_address }}{{^masterchef_address}}0x0000000000000000000000000000000000000000{{/masterchef_address}}'
-)
-
-export const MASTER_CHEF_V2_ADDRESS = Address.fromString('0xef0881ec094552b2e128cf945ef17a6752b4ec5d')
-
 export const SOUL_BAR_ADDRESS = Address.fromString(
   '{{ sushi_bar_address }}{{^sushi_bar_address}}0x0000000000000000000000000000000000000000{{/sushi_bar_address}}'
 )
@@ -76,14 +51,6 @@ export const SOUL_USDC_PAIR_ADDRESS = Address.fromString(
   '{{ soul_usdc_pair_address }}{{^soul_usdc_pair_address}}0x0000000000000000000000000000000000000000{{/soul_usdc_pair_address}}'
 )
 
-export const SEANCE_USDC_PAIR_ADDRESS = Address.fromString(
-  '{{ seance_usdc_pair_address }}{{^seance_usdc_pair_address}}0x0000000000000000000000000000000000000000{{/seance_usdc_pair_address}}'
-)
-
-export const SEANCE_WETH_PAIR_ADDRESS = Address.fromString(
-  '{{ seance_weth_pair_address }}{{^seance_weth_pair_address}}0x0000000000000000000000000000000000000000{{/seance_weth_pair_address}}'
-)
-
 export const SOUL_DISTRIBUTOR_ADDRESS = Address.fromString(
   '{{ soul_distributor_address }}{{^soul_distributor_address}}0x0000000000000000000000000000000000000000{{/soul_distributor_address}}'
 )
@@ -93,9 +60,6 @@ export const USDC_NATIVE_PAIR =
 
 export const DAI_NATIVE_PAIR =
   '{{ dai_native_pair }}{{^dai_native_pair}}0x0000000000000000000000000000000000000000{{/dai_native_pair}}'
-
-// export const USDT_NATIVE_PAIR =
-//   '{{ usdt_native_pair }}{{^usdt_native_pair}}0x0000000000000000000000000000000000000000{{/usdt_native_pair}}'
 
 export const SOUL_USDC_PAIR =
   '{{ soul_usdc_pair }}{{^soul_usdc_pair}}0x0000000000000000000000000000000000000000{{/soul_usdc_pair}}'
@@ -110,6 +74,10 @@ export const MINIMUM_LIQUIDITY_THRESHOLD_ETH = BigDecimal.fromString('{{ minimum
 
 export const WETH_ADDRESS = Address.fromString(
   '{{ weth_address }}{{^weth_address}}0x0000000000000000000000000000000000000000{{/weth_address}}'
+)
+
+export const WBTC_ADDRESS = Address.fromString(
+  '{{ wbtc_address }}{{^wbtc_address}}0x0000000000000000000000000000000000000000{{/wbtc_address}}'
 )
 
 export const SOULSWAP_WETH_USDT_PAIR_ADDRESS = Address.fromString(

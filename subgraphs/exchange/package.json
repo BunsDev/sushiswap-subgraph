@@ -9,11 +9,10 @@
     "scripts": {
         "codegen": "graph codegen subgraph.yaml",
         "build": "graph build subgraph.yaml",
-        "create-local": "graph create --node http://localhost:8020/ /SoulSwapFinance/fantom-exchange",
-        "remove-local": "graph remove --node http://localhost:8020/ /SoulSwapFinance/fantom-exchange",
-        "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 /SoulSwapFinance/fantom-exchange",
-        "deploy:fantom": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ SoulSwapFinance/fantom-exchange subgraph.yaml",
-
-        "prepare:fantom": "mustache ../../config/fantom.json template.yaml > subgraph.yaml"
+        "create-local": "graph create --node http://localhost:8020/ /soulswapfinance/avalanche-exchange",
+        "remove-local": "graph remove --node http://localhost:8020/ /soulswapfinance/avalanche-exchange",
+        "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 /soulswapfinance/avalanche-exchange",
+        "prepare:avalanche": "mustache ../../config/avalanche.json template.yaml > subgraph.yaml",
+        "deploy:avalanche": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ soulswapfinance/avalanche-exchange subgraph.yaml"
     }
 }

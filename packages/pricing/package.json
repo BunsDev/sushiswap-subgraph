@@ -12,6 +12,6 @@
   "scripts": {
     "codegen": "true",
     "build": "true",
-    "prepare:fantom": "true"
+    "prepare:avalanche": "true"
   }
 }

@@ -99,7 +99,6 @@ export function getEthPrice(block: ethereum.Block = null): BigDecimal {
   ) {
     const isDaiFirst = daiPair.token0 == DAI
     const isUsdcFirst = usdcPair.token0 == USDC
-    // const isUsdtFirst = usdtPair.token0 == USDT
 
     const daiPairEth = isDaiFirst ? daiPair.reserve1 : daiPair.reserve0
 
@@ -159,9 +158,6 @@ export function getEthPrice(block: ethereum.Block = null): BigDecimal {
   } else if (usdcPair !== null && usdcPair.reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)) {
     const isUsdcFirst = usdcPair.token0 == USDC
     return isUsdcFirst ? usdcPair.token0Price : usdcPair.token1Price
-  // } else if (usdtPair !== null && usdtPair.reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)) {
-    // const isUsdtFirst = usdtPair.token0 == USDT
-    // return isUsdtFirst ? usdtPair.token0Price : usdtPair.token1Price
   } else if (daiPair !== null && daiPair.reserveETH.gt(MINIMUM_LIQUIDITY_THRESHOLD_ETH)) {
     const isDaiFirst = daiPair.token0 == DAI
     return isDaiFirst ? daiPair.token0Price : daiPair.token1Price

@@ -8,6 +8,6 @@
   "scripts": {
     "codegen": "true",
     "build": "true",
-    "prepare:fantom": "mustache ../../config/fantom.json index.template.ts > index.ts"
+    "prepare:avalanche": "mustache ../../config/avalanche.json index.template.ts > index.ts"
   }
 }
