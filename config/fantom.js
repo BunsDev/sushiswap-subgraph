@@ -23,7 +23,7 @@ module.exports = {
       DAI_ADDRESS,
       USDC_ADDRESS,
     ],
-    stableTokenAddresses: [USDC_ADDRESS, USDT_ADDRESS, DAI_ADDRESS],
+    stableTokenAddresses: [USDC_ADDRESS, DAI_ADDRESS],
     minimumNativeLiquidity: 5,
     minimum_usd_threshold_new_pairs: '100',
     factory: {
