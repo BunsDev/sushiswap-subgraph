@@ -1,0 +1,28 @@
+{
+    "name": "underworld",
+    "author": "Buns Enchantress <bunsthedev@gmail.com>",
+    "license": "MIT",
+    "repository": {
+      "url": "soulswapfinance/subgraph",
+      "directory": "subgraphs/underworld"
+    },
+    "files": [
+      "generated"
+    ],
+    "scripts": {
+      "generate": "mustache ../../config/$NETWORK.js template.yaml > subgraph.yaml && mustache ../../config/$NETWORK.js src/constants/index.template.ts > src/constants/index.ts && graph codegen",
+      "build": "graph build",
+      "test": "graph test -r",
+      "create-local": "graph create --node http://localhost:8020/ soulswapfinance/underworld-local",
+      "remove-local": "graph remove --node http://localhost:8020/ soulswapfinance/underworld-local",
+      "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 soulswapfinance/underworld-local",
+      "deploy-avalanche": "graph deploy --product hosted-service soulswapfinance/underworld-avalanche"
+    },
+    "devDependencies": {
+      "abi": "workspace:*",
+      "math": "workspace:*",
+      "@graphprotocol/graph-cli": "^0.32.0",
+      "@graphprotocol/graph-ts": "^0.27.0",
+      "matchstick-as": "^0.5.0"
+    }
+  }
