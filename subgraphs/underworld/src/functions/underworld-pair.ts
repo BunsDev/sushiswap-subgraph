@@ -47,13 +47,13 @@ export function createUnderworldPair(event: LogDeploy): void {
   pair.accrueInfo = accrueInfo.id
   pair.name = pairContract.name()
   pair.symbol = pairContract.symbol()
-  pair.decimals = BigInt.fromU32(pairContract.decimals())
+  pair.decimals = BigInt.fromI32(pairContract.decimals())
   pair.totalSupply = pairContract.totalSupply()
 
-  pair.borrowAPR = BigInt.fromU32(0)
+  pair.borrowAPR = BigInt.fromI32(0)
   pair.supplyAPR = STARTING_INTEREST_PER_YEAR
-  pair.utilization = BigInt.fromU32(0)
-  pair.totalFeesEarnedFraction = BigInt.fromU32(0)
+  pair.utilization = BigInt.fromI32(0)
+  pair.totalFeesEarnedFraction = BigInt.fromI32(0)
 
   pair.block = event.block.number
   pair.timestamp = event.block.timestamp

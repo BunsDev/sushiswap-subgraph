@@ -98,8 +98,8 @@ export function getTokenDecimals(contract: ERC20): Decimal {
   const decimals = contract.try_decimals()
 
   if (!decimals.reverted) {
-    return { success: true, value: BigInt.fromU32(decimals.value) }
+    return { success: true, value: BigInt.fromI32(decimals.value) }
   }
 
-  return { success: false, value: BigInt.fromU32(18) }
-}s
+  return { success: false, value: BigInt.fromI32(18) }
+}

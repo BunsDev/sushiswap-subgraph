@@ -1,0 +1,110 @@
+specVersion: 0.0.6
+description: Underworld
+repository: https://github.com/soulswapfinance/soulswap-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: CoffinBox
+    network: avalanche
+    source:
+      address: '0x51d7d0d03a9e38ba550f24cea28b992ad2350fee'
+      startBlock: 17148342
+      abi: CoffinBox
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/coffinbox.ts
+      entities:
+        - CoffinBox
+        - MasterContract
+        - MasterContractApproval
+        - Clone
+        - Rebase
+        - Token
+      abis:
+        - name: CoffinBox
+          file: ./abis/CoffinBox.json
+        - name: UnderworldPair
+          file: ./abis/UnderworldPair.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: SymbolBytes32
+          file: ./abis/ERC20SymbolBytes32.json
+        - name: NameBytes32
+          file: ./abis/ERC20NameBytes32.json
+      eventHandlers:
+        # CoffinBox
+        - event: LogDeposit(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: onLogDeposit
+        - event: LogWithdraw(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: onLogWithdraw
+        - event: LogFlashLoan(indexed address,indexed address,uint256,uint256,indexed address)
+          handler: onLogFlashLoan
+        - event: LogStrategyProfit(indexed address,uint256)
+          handler: onLogStrategyProfit
+        - event: LogStrategyLoss(indexed address,uint256)
+          handler: onLogStrategyLoss
+        # MasterContractManager
+        - event: LogWhiteListMasterContract(indexed address,bool)
+          handler: onLogWhiteListMasterContract
+        - event: LogSetMasterContractApproval(indexed address,indexed address,bool)
+          handler: onLogSetMasterContractApproval
+        # BoringFactory
+        - event: LogDeploy(indexed address,bytes,indexed address)
+          handler: onLogDeploy
+templates:
+  - kind: ethereum/contract
+    name: UnderworldPair
+    network: avalanche
+    source:
+      abi: UnderworldPair
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/mappings/underworld.ts
+      entities:
+        - UnderworldPair
+        - UnderworldPairAccrueInfo
+        - UnderworldPairKpi
+        - Swapper
+        - Token
+        - Rebase
+        - User
+        - Balance
+      abis:
+        - name: CoffinBox
+          file: ./abis/CoffinBox.json
+        - name: UnderworldPair
+          file: ./abis/UnderworldPair.json
+      eventHandlers:
+        - event: LogExchangeRate(uint256)
+          handler: handleLogExchangeRate
+        - event: LogAccrue(uint256,uint256,uint64,uint256)
+          handler: handleLogAccrue
+        - event: LogAddCollateral(indexed address,indexed address,uint256)
+          handler: handleLogAddCollateral
+        - event: LogAddAsset(indexed address,indexed address,uint256,uint256)
+          handler: handleLogAddAsset
+        - event: LogRemoveCollateral(indexed address,indexed address,uint256)
+          handler: handleLogRemoveCollateral
+        - event: LogRemoveAsset(indexed address,indexed address,uint256,uint256)
+          handler: handleLogRemoveAsset
+        - event: LogBorrow(indexed address,indexed address,uint256,uint256,uint256)
+          handler: handleLogBorrow
+        - event: LogRepay(indexed address,indexed address,uint256,uint256)
+          handler: handleLogRepay
+        - event: LogFeeTo(indexed address)
+          handler: handleLogFeeTo
+        - event: LogWithdrawFees(indexed address,uint256)
+          handler: handleLogWithdrawFees
+        # BoringERC20
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+       # BoringERC20
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred

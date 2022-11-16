@@ -19,5 +19,5 @@ export function getOrCreateCoffinBox(id: Address = COFFINBOX_ADDRESS): CoffinBox
     coffinBox = createCoffinBox(id)
   }
 
-  return coffinBox
+  return coffinBox as CoffinBox
 }
