@@ -11,12 +11,13 @@
     ],
     "scripts": {
       "generate": "mustache ../../config/$NETWORK.js template.yaml > subgraph.yaml && mustache ../../config/$NETWORK.js src/constants/index.template.ts > src/constants/index.ts && graph codegen",
+      "generate:avax": "mustache ../../config/avalanche.js template.yaml > subgraph.yaml && mustache ../../config/avalanche.js src/constants/index.template.ts > src/constants/index.ts && graph codegen",
       "build": "graph build",
       "test": "graph test -r",
       "create-local": "graph create --node http://localhost:8020/ soulswapfinance/underworld-local",
       "remove-local": "graph remove --node http://localhost:8020/ soulswapfinance/underworld-local",
       "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 soulswapfinance/underworld-local",
-      "deploy-avalanche": "graph deploy --product hosted-service soulswapfinance/underworld-avalanche"
+      "deploy:avax": "graph deploy --product hosted-service soulswapfinance/avalanche-underworld"
     },
     "devDependencies": {
       "abi": "workspace:*",

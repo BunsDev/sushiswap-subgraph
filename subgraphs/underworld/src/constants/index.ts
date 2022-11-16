@@ -9,7 +9,7 @@ export const BIG_INT_ONE = BigInt.fromI32(1)
 export const HOUR_IN_SECONDS = 3600
 export const DAY_IN_SECONDS = 24 * HOUR_IN_SECONDS
 
-export const COFFINBOX_ADDRESS = Address.fromString('0x51d7d0d03A9E38Ba550f24cea28B992AD2350fee')
+export const COFFINBOX_ADDRESS = Address.fromString('0x51d7d0d03a9e38ba550f24cea28b992ad2350fee')
 
 export const UNDERWORLD_MEDIUM_RISK_MASTER_CONTRACT_ADDRESSES = ''.split(',')
 
