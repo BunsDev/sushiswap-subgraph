@@ -1,0 +1,249 @@
+type CoffinBox @entity(immutable: true) {
+  " CoffinBox address "
+  id: ID!
+  " Master contracts that belong to this coffin box "
+  masterContracts: [MasterContract!] @derivedFrom(field: "coffinBox")
+}
+
+type MasterContract @entity {
+  " MasterContract address "
+  id: ID!
+  " CoffinBox this master contract belongs to "
+  coffinBox: CoffinBox!
+  " Clones that belong to this master contract "
+  clones: [Clone!] @derivedFrom(field: "masterContract")
+  " MasterContractApprovals that belong to this master contract "
+  masterContractApprovals: [MasterContractApproval!] @derivedFrom(field: "masterContract")
+  " MasterContract is whitelisted by SoulSwap Operations"
+  approved: Boolean!
+}
+
+type Clone @entity(immutable: true) {
+  " Clone address "
+  id: ID!
+  " CoffinBox this clone belongs to "
+  coffinBox: CoffinBox!
+  " Master contract this clone belongs to "
+  masterContract: MasterContract!
+  " Clone data "
+  data: Bytes!
+  " Block number of this clone "
+  block: BigInt!
+  " Timestamp of this clone "
+  timestamp: BigInt!
+}
+
+type MasterContractApproval @entity {
+  "Concatenation of user adddress and master contract address"
+  id: ID!
+  " MasterContract this master contract approval belongs to "
+  masterContract: MasterContract!
+  " User this master contract approval belongs to "
+  user: User!
+  " If user has approved this master contract "
+  approved: Boolean!
+}
+
+type Underworld @entity {
+  " CoffinBox address "
+  id: ID!
+  " Master contract count "
+  masterContractCount: BigInt!
+  " Token count "
+  tokenCount: BigInt!
+  " Transaction count "
+  transactionCount: BigInt!
+  " User count "
+  userCount: BigInt!
+  " Add collateral count "
+  addCollateralCount: BigInt!
+  " Remove collateral count "
+  removeCollateralCount: BigInt!
+  " Add asset count "
+  addAssetCount: BigInt!
+  " Remove asset count "
+  removeAssetCount: BigInt!
+  " Borrow count "
+  borrowCount: BigInt!
+  " Repay count "
+  repayCount: BigInt!
+  " Market count "
+  marketCount: BigInt!
+}
+
+type UnderworldPair @entity {
+  " UnderworldPair address "
+  id: ID!
+  " The CoffinBox this pair belongs to "
+  coffinBox: CoffinBox!
+  " The MasterContract this pair belongs to "
+  masterContract: MasterContract!
+  " The feeTo address of this pair "
+  feeTo: Bytes!
+  " Swappers which belong to this pair "
+  swappers: [Swapper!] @derivedFrom(field: "pair")
+  " Collateral "
+  collateral: Token!
+  " Asset "
+  asset: Token!
+  " Oracle address "
+  oracle: Bytes!
+  " Oracle data "
+  oracleData: Bytes!
+ " Total collateral share of this pair "
+  totalCollateralShare: BigInt!
+ " Total asset rebase of this pair "
+  totalAsset: Rebase!
+  " Total borrow rebase of this pair "
+  totalBorrow: Rebase!
+  " Balances which belong to this pair "
+  balances: [Balance!] @derivedFrom(field: "pair")
+  " UnderworldPair cached exchange rate "
+  exchangeRate: BigInt!
+  " AccrueInfo for this pair"
+  accrueInfo: UnderworldPairAccrueInfo!
+  " UnderworldPair name "
+  name: String!
+  " UnderworldPair symbol "
+  symbol: String!
+  " UnderworldPair decimals "
+  decimals: BigInt!
+  " UnderworldPair totalSupply "
+  totalSupply: BigInt!
+  " Supply APR "
+  supplyAPR: BigInt!
+  " Borrow APR "
+  borrowAPR: BigInt!
+  " Utilization "
+  utilization: BigInt!
+  " Total fees earned fraction "
+  totalFeesEarnedFraction: BigInt!
+  " Block number of this pair "
+  block: BigInt!
+  " Timestamp of this pair "
+  timestamp: BigInt!
+}
+
+type UnderworldPairHourSnapshot @entity {
+  " {UnderworldPairAddress}-hour-{timestamp} "
+  id: ID!
+  " Underworld pair this hour snapshot belongs to "
+  pair: UnderworldPair!
+  " Date of this snapshot "
+  date: Int!
+ " Total collateral share of this pair "
+  totalCollateralShare: BigInt!
+  " UnderworldPair cached exchange rate "
+  exchangeRate: BigInt!
+  " UnderworldPair totalSupply "
+  totalSupply: BigInt!
+  " Supply APR "
+  supplyAPR: BigInt!
+  " Borrow APR "
+  borrowAPR: BigInt!
+  " Utilization "
+  utilization: BigInt!
+  " Total fees earned fraction "
+  totalFeesEarnedFraction: BigInt!
+}
+
+type UnderworldPairDaySnapshot @entity {
+  " {UnderworldPairAddress}-day-{timestamp} "
+  id: ID!
+  " Underworld pair this hour snapshot belongs to "
+  pair: UnderworldPair!
+  " Date of this snapshot "
+  date: Int!
+ " Total collateral share of this pair "
+  totalCollateralShare: BigInt!
+  " UnderworldPair cached exchange rate "
+  exchangeRate: BigInt!
+  " UnderworldPair totalSupply "
+  totalSupply: BigInt!
+  " Supply APR "
+  supplyAPR: BigInt!
+  " Borrow APR "
+  borrowAPR: BigInt!
+  " Utilization "
+  utilization: BigInt!
+  " Total fees earned fraction "
+  totalFeesEarnedFraction: BigInt!
+}
+
+type UnderworldPairAccrueInfo @entity {
+  " UnderworldPair address "
+  id: ID!
+  " Interest per second "  
+  interestPerSecond: BigInt!
+  " Last accrued timestamp "
+  lastAccrued: BigInt!
+  " Fees earned fraction "
+  feesEarnedFraction: BigInt!
+}
+
+type Swapper @entity {
+  " Swapper address "
+  id: ID!
+  " Underworld pair which this swapper belongs to "
+  pair: UnderworldPair!
+}
+
+type Token @entity(immutable: true) {
+  " Token address "
+  id: ID!
+  " The Rebase that belongs to this token "
+  rebase: Rebase!
+  " Token symbol, if fetched successfully, else default to ??? "
+  symbol: String!
+  " If the symbol was succesfully fetched "
+  symbolSuccess: Boolean!
+  " Token name, if fetched successfully, else default to ??? "
+  name: String!
+  " If the name was succesfully fetched "
+  nameSuccess: Boolean!
+  " Token decimals, if fetched successfully, else default to 18 "
+  decimals: BigInt!
+  " If the decimals was succesfully fetched "
+  decimalsSuccess: Boolean!
+}
+
+type Rebase @entity {
+  " Concatenation of pair address and 'asset' or 'borrow' "
+  id: ID!
+  " CoffinBox this rebase belongs to "
+  coffinBox: CoffinBox!
+  " Token this rebase belongs to "
+  token: Token!
+  " Base (Share) "
+  base: BigInt!
+  " Elastic (Amount) "
+  elastic: BigInt!
+}
+
+type User @entity(immutable: true) {
+  " User address "
+  id: ID!
+  " CoffinBox this user belongs to "
+  coffinBox: CoffinBox!
+  " MasterContractApprovals that belong to this user "
+  masterContractApprovals: [MasterContractApproval!] @derivedFrom(field: "user")
+  " Balances that belong to this user "
+  balances: [Balance!] @derivedFrom(field: "user")
+  " Block number of this user "
+  block: BigInt!
+  " Timestamp of this user "
+  timestamp: BigInt!
+}
+
+type Balance @entity {
+  " User address "
+  id: ID!
+  " Underworld pair which this balance belongs to "  
+  pair: UnderworldPair!
+  " User which this balance belongs to "  
+  user: User!
+  " User collateral share "  
+  userCollateralShare: BigInt!
+  " User borrow part "  
+  userBorrowPart: BigInt!
+}
