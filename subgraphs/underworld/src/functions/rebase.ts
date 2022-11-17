@@ -2,7 +2,7 @@ import { BigInt, log } from '@graphprotocol/graph-ts'
 import { COFFINBOX_ADDRESS } from '../constants'
 import { Rebase } from '../../generated/schema'
 
-export function createRebase(token: string | null): Rebase {
+export function createRebase(token: string): Rebase {
   const rebase = new Rebase(token)
   rebase.token = token
   rebase.coffinBox = COFFINBOX_ADDRESS.toHex()

@@ -8,11 +8,12 @@
   "scripts": {
     "build": "yarn workspaces run build",
     "codegen": "yarn workspaces run codegen",
-    "prepare:fantom": "yarn workspaces run prepare:fantom"
+    "prepare:fantom": "yarn workspaces run prepare:fantom",
+    "prepare:avalanche": "yarn workspaces run prepare:avalanche"
   },
   "devDependencies": {
-    "@graphprotocol/graph-cli": "^0.21.1",
-    "@graphprotocol/graph-ts": "^0.20.0",
+    "@graphprotocol/graph-cli": "^0.22.0",
+    "@graphprotocol/graph-ts": "^0.22.0",
     "@sushiswap/core": "^1.4.2",
     "@sushiswap/prettier-config": "^0.1.0",
     "@typescript-eslint/eslint-plugin": "^4.0.0",

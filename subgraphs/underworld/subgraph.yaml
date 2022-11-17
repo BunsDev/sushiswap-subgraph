@@ -6,10 +6,10 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: CoffinBox
-    network: {{ network }}
+    network: avalanche
     source:
-      address: '{{ coffinbox.address }}'
-      startBlock: {{ coffinbox.startBlock }}
+      address: '0x51d7d0d03a9e38ba550f24cea28b992ad2350fee'
+      startBlock: 17148342
       abi: CoffinBox
     mapping:
       kind: ethereum/events
@@ -57,7 +57,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: UnderworldPair
-    network: {{ network }}
+    network: avalanche
     source:
       abi: UnderworldPair
     mapping:

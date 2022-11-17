@@ -12,12 +12,14 @@
     "scripts": {
       "generate": "mustache ../../config/$NETWORK.js template.yaml > subgraph.yaml && mustache ../../config/$NETWORK.js src/constants/index.template.ts > src/constants/index.ts && graph codegen",
       "generate:fantom": "mustache ../../config/fantom.js template.yaml > subgraph.yaml && mustache ../../config/fantom.js src/constants/index.template.ts > src/constants/index.ts && graph codegen",
+      "generate:avalanche": "mustache ../../config/avalanche.js template.yaml > subgraph.yaml && mustache ../../config/avalanche.js src/constants/index.template.ts > src/constants/index.ts && graph codegen",
       "build": "graph build",
       "test": "graph test -r",
       "create-local": "graph create --node http://localhost:8020/ soulswapfinance/underworld-local",
       "remove-local": "graph remove --node http://localhost:8020/ soulswapfinance/underworld-local",
       "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 soulswapfinance/underworld-local",
-      "deploy:fantom": "graph deploy --product hosted-service soulswapfinance/fantom-underworld"
+      "deploy:fantom": "graph deploy --product hosted-service soulswapfinance/fantom-underworld",
+      "deploy:avalanche": "graph deploy --product hosted-service soulswapfinance/avalanche-underworld"
     },
     "devDependencies": {
       "abi": "workspace:*",
@@ -26,4 +28,4 @@
       "@graphprotocol/graph-ts": "^0.27.0",
       "matchstick-as": "^0.5.0"
     }
-  }
+}
